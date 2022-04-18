@@ -517,8 +517,8 @@ public class PedidoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuProdutoActionPerformed
 
     private void mnuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRelatorioActionPerformed
-        RelatorioFrame Relatorio = new RelatorioFrame();
-        Relatorio.setVisible(true);
+        BuscaRelatorioFrame BuscaRelatorio = new BuscaRelatorioFrame();
+        BuscaRelatorio.setVisible(true);
     }//GEN-LAST:event_mnuRelatorioActionPerformed
 
     /**
