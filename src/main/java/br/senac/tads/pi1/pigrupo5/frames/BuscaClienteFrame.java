@@ -40,7 +40,7 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
 
         jButton4.setText("Adicionar");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -64,6 +64,11 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
         btnExcluir.setText("Excluir");
 
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
 
@@ -112,6 +117,11 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        CadastroClienteFrame CadastroCliente = new CadastroClienteFrame();
+        CadastroCliente.setVisible(true);
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
     /**
      * @param args the command line arguments

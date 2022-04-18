@@ -61,10 +61,12 @@ public class PedidoFrame extends javax.swing.JFrame {
         lblHeaderInfo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mnuProduto = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mnuBuscaCliente = new javax.swing.JMenuItem();
+        mnuCadastroCLiente = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        mnuRelatorio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,7 +256,12 @@ public class PedidoFrame extends javax.swing.JFrame {
 
         pnlButtons.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnAddCustomer.setText("Adiconar o cliente");
+        btnAddCustomer.setText("Adicionar o cliente");
+        btnAddCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddCustomerActionPerformed(evt);
+            }
+        });
 
         btnFinishOrder.setText("Finalizar Pedido");
 
@@ -397,19 +404,47 @@ public class PedidoFrame extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Produtos");
+
+        mnuProduto.setText("Produtos");
+        mnuProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuProdutoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuProduto);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Clientes");
 
-        jMenuItem1.setText("Buscar Cliente");
-        jMenu2.add(jMenuItem1);
+        mnuBuscaCliente.setText("Buscar Cliente");
+        mnuBuscaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuBuscaClienteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuBuscaCliente);
 
-        jMenuItem2.setText("Cadastrar Cliente");
-        jMenu2.add(jMenuItem2);
+        mnuCadastroCLiente.setText("Cadastrar Cliente");
+        mnuCadastroCLiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadastroCLienteActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuCadastroCLiente);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Relatórios");
+
+        mnuRelatorio.setText("Relatórios");
+        mnuRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuRelatorioActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnuRelatorio);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -461,6 +496,31 @@ public class PedidoFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteItemActionPerformed
 
+    private void mnuCadastroCLienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroCLienteActionPerformed
+        CadastroClienteFrame CadastroCliente  = new CadastroClienteFrame();
+        CadastroCliente.setVisible(true);
+    }//GEN-LAST:event_mnuCadastroCLienteActionPerformed
+
+    private void mnuBuscaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBuscaClienteActionPerformed
+        BuscaClienteFrame BuscaCliente  = new BuscaClienteFrame();
+        BuscaCliente.setVisible(true);
+    }//GEN-LAST:event_mnuBuscaClienteActionPerformed
+
+    private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
+        BuscaClienteFrame BuscaCliente  = new BuscaClienteFrame();
+        BuscaCliente.setVisible(true);
+    }//GEN-LAST:event_btnAddCustomerActionPerformed
+
+    private void mnuProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutoActionPerformed
+        ProdutoFrame Produto = new ProdutoFrame();
+        Produto.setVisible(true);
+    }//GEN-LAST:event_mnuProdutoActionPerformed
+
+    private void mnuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRelatorioActionPerformed
+        RelatorioFrame Relatorio = new RelatorioFrame();
+        Relatorio.setVisible(true);
+    }//GEN-LAST:event_mnuRelatorioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -509,8 +569,6 @@ public class PedidoFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblDataNascimento;
@@ -528,6 +586,10 @@ public class PedidoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblTelefone;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblTotalValue;
+    private javax.swing.JMenuItem mnuBuscaCliente;
+    private javax.swing.JMenuItem mnuCadastroCLiente;
+    private javax.swing.JMenuItem mnuProduto;
+    private javax.swing.JMenuItem mnuRelatorio;
     private javax.swing.JPanel pnlButtons;
     private javax.swing.JPanel pnlCliente;
     private javax.swing.JPanel pnlDiscountLabel;

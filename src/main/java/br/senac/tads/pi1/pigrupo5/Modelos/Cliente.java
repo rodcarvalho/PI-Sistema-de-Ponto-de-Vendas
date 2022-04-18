@@ -10,5 +10,5 @@ package br.senac.tads.pi1.pigrupo5.Modelos;
  * @author rodrigocarvalho
  */
 public class Cliente {
-    
+
 }

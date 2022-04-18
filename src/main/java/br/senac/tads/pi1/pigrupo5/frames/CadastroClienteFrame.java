@@ -7,7 +7,7 @@ package br.senac.tads.pi1.pigrupo5.frames;
 
 /**
  *
- * @author Kaio
+ * @author KSSena
  */
 public class CadastroClienteFrame extends javax.swing.JFrame {
 
@@ -90,7 +90,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jList1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         pnlDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Básicos"));
@@ -98,7 +98,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
 
         lblNome.setText("Nome:");
 
-        lblCPF.setText("CPF: ");
+        lblCPF.setText("CPF:");
 
         lblSexo.setText("Sexo:");
 
@@ -146,8 +146,8 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNome)
-                    .addComponent(lblSexo)
-                    .addComponent(lblCPF))
+                    .addComponent(lblCPF, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblSexo, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDadosLayout.createSequentialGroup()
@@ -317,7 +317,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
                                 .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(13, 13, 13))
                     .addGroup(pnlEnderecoLayout.createSequentialGroup()
-                        .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblUF)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -325,7 +325,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel15)
                         .addGap(25, 25, 25))))
