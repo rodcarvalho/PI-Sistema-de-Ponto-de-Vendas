@@ -69,6 +69,7 @@ public class PedidoFrame extends javax.swing.JFrame {
         mnuRelatorio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -489,7 +490,8 @@ public class PedidoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
-        // TODO add your handling code here:
+        SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame();
+        SelecionarProduto.setVisible(true);
     }//GEN-LAST:event_btnAddItemActionPerformed
 
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
@@ -507,8 +509,8 @@ public class PedidoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuBuscaClienteActionPerformed
 
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
-        BuscaClienteFrame BuscaCliente  = new BuscaClienteFrame();
-        BuscaCliente.setVisible(true);
+        SelecionarClienteFrame SelecionarCliente  = new SelecionarClienteFrame();
+        SelecionarCliente.setVisible(true);
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void mnuProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutoActionPerformed

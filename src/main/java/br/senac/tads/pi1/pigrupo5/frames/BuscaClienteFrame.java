@@ -41,6 +41,7 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
         jButton4.setText("Adicionar");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         tblCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
