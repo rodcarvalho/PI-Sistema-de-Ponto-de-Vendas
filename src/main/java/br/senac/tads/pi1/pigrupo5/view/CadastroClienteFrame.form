@@ -52,7 +52,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Default Cursor"/>
+      <Color id="Cursor Padr&#xe3;o"/>
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
@@ -85,7 +85,7 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="btnCadastrar" min="-2" pref="135" max="-2" attributes="0"/>
+              <Component id="btnSalvar" min="-2" pref="135" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -97,7 +97,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlTabbed" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnCadastrar" min="-2" pref="44" max="-2" attributes="0"/>
+              <Component id="btnSalvar" min="-2" pref="44" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -129,7 +129,7 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtCPF" max="32767" attributes="0"/>
-                              <Component id="txtSexo" pref="120" max="32767" attributes="0"/>
+                              <Component id="cbSexo" pref="120" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -138,7 +138,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtEstadoCivil" max="32767" attributes="0"/>
+                              <Component id="cbEstadoCivil" max="32767" attributes="0"/>
                               <Component id="txtNascimento" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -166,9 +166,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblSexo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtSexo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbSexo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblEstadoCivil" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtEstadoCivil" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cbEstadoCivil" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -192,7 +192,7 @@
             <Property name="text" type="java.lang.String" value="Sexo:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="txtSexo">
+        <Component class="javax.swing.JComboBox" name="cbSexo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
@@ -204,7 +204,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSexoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbSexoActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -225,7 +225,7 @@
             <Property name="text" type="java.lang.String" value="Estado Civil:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="txtEstadoCivil">
+        <Component class="javax.swing.JComboBox" name="cbEstadoCivil">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -293,7 +293,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtEmail" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="txtTipo" min="-2" pref="103" max="-2" attributes="0"/>
+                              <Component id="cbTipoTelefone" min="-2" pref="103" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblDDD" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -323,7 +323,7 @@
                           <Component id="txtTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtDDD" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblTipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbTipoTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="41" max="32767" attributes="0"/>
                   </Group>
@@ -348,7 +348,7 @@
                 <Property name="text" type="java.lang.String" value="Tipo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="txtTipo">
+            <Component class="javax.swing.JComboBox" name="cbTipoTelefone">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
@@ -359,7 +359,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTipoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbTipoTelefoneActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -421,7 +421,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblNumero" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtNumero" min="-2" pref="61" max="-2" attributes="0"/>
+                                      <Component id="txtNumeroEndereco" min="-2" pref="61" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
@@ -452,7 +452,7 @@
                           <Component id="lblLogradouro" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtLogradouro" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblNumero" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNumero" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNumeroEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -538,7 +538,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="txtNumero">
+            <Component class="javax.swing.JFormattedTextField" name="txtNumeroEndereco">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
                   <Format format="####" subtype="-1" type="5"/>
@@ -556,10 +556,13 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnCadastrar">
+    <Component class="javax.swing.JButton" name="btnSalvar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cadastrar"/>
+        <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

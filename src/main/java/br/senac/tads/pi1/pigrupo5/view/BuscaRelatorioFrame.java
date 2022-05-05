@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.senac.tads.pi1.pigrupo5.frames;
+package br.senac.tads.pi1.pigrupo5.view;
 
-import br.senac.tads.pi1.pigrupo5.frames.RelatorioFrame;
+import br.senac.tads.pi1.pigrupo5.view.RelatorioFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 

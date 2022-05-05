@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.senac.tads.pi1.pigrupo5.Modelos;
+package br.senac.tads.pi1.pigrupo5.model;
 
 import java.util.ArrayList;
 import java.util.Date;
