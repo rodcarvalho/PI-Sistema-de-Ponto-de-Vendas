@@ -36,7 +36,7 @@ public class Main {
                 Logger.getLogger(br.senac.tads.pi1.pigrupo5.Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
         PedidoFrame telaInicial = new PedidoFrame();
         telaInicial.setVisible(true);
     }

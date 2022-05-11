@@ -9,7 +9,9 @@ import br.senac.tads.pi1.pigrupo5.model.Cliente;
 import br.senac.tads.pi1.pigrupo5.utils.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +19,7 @@ import java.sql.SQLException;
  */
 public class ClienteDAO {
 
-    public static boolean salvar(Cliente c) {
+    public static boolean adicionar(Cliente c) {
         boolean retorno;
         Connection conexao = null;
         PreparedStatement comandoSQL1 = null;
@@ -78,4 +80,193 @@ public class ClienteDAO {
 
         return retorno;
     }
+
+    public static boolean atualizar(Cliente c) {
+        boolean retorno;
+        Connection conexao = null;
+        PreparedStatement comandoSQL1 = null;
+        PreparedStatement comandoSQL2 = null;
+        PreparedStatement comandoSQL3 = null;
+
+        try {
+            conexao = Conexao.abrirConexao();
+
+            comandoSQL1 = conexao.prepareStatement("UPDATE contato SET email = ?, tipoTelefone = ?, ddd = ?, telefone = ? WHERE id_cliente = ?");
+            comandoSQL2 = conexao.prepareStatement("UPDATE endereco SET logradouro = ?, bairro = ?, complemento = ?, cep = ?, uf = ?, cidade = ?, numEndereco = ? WHERE id_cliente = ?");
+            comandoSQL3 = conexao.prepareStatement("UPDATE cliente SET nome = ?, cpf = ?, nascimento = ?, sexo = ?, estadoCivil = ? WHERE id = ? ");
+
+            //Contato
+            comandoSQL1.setString(1, c.getEmail());
+            comandoSQL1.setString(2, c.getTipoTelefone());
+            comandoSQL1.setString(3, c.getDdd());
+            comandoSQL1.setString(4, c.getTelefone());
+            comandoSQL1.setInt(5, c.getId());
+            
+            //Endereço
+            comandoSQL2.setString(1, c.getLogradouro());
+            comandoSQL2.setString(2, c.getBairro());
+            comandoSQL2.setString(3, c.getComplemento());
+            comandoSQL2.setString(4, c.getCep());
+            comandoSQL2.setString(5, c.getUf());
+            comandoSQL2.setString(6, c.getCidade());
+            comandoSQL2.setString(7, c.getNumEndereco());
+            comandoSQL2.setInt(8, c.getId());
+
+            //Dados Basicos
+            comandoSQL3.setString(1, c.getNome());
+            comandoSQL3.setString(2, c.getCpf());
+            comandoSQL3.setString(3, c.getNascimento());
+            comandoSQL3.setString(4, c.getSexo());
+            comandoSQL3.setString(5, c.getEstadoCivil());
+            comandoSQL3.setInt(6, c.getId());
+
+            int linhasAfetadas = comandoSQL1.executeUpdate() + comandoSQL2.executeUpdate() + comandoSQL3.executeUpdate();
+
+            if (linhasAfetadas >= 3) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+            retorno = false;
+        } finally {
+            try {
+                if (comandoSQL1 != null || comandoSQL2 != null || comandoSQL3 != null) {
+                    comandoSQL1.close();
+                    comandoSQL2.close();
+                    comandoSQL2.close();
+                }
+                Conexao.fecharConexao();
+            } catch (SQLException e) {
+            }
+        }
+
+        return retorno;
+    }
+
+    public static boolean excluir(int Id) {
+        boolean retorno = false;
+        Connection conexao = null;
+        PreparedStatement comandoSQL1 = null;
+        PreparedStatement comandoSQL2 = null;
+        PreparedStatement comandoSQL3 = null;
+
+        try {
+            conexao = Conexao.abrirConexao();
+
+            comandoSQL1 = conexao.prepareStatement("DELETE FROM contato WHERE id_cliente = ?");
+            comandoSQL1.setInt(1, Id);
+
+            comandoSQL2 = conexao.prepareStatement(" DELETE FROM endereco WHERE id_cliente = ? ");
+            comandoSQL2.setInt(1, Id);
+
+            comandoSQL3 = conexao.prepareStatement("DELETE FROM cliente WHERE id = ?");
+            comandoSQL3.setInt(1, Id);
+
+            int linhasAfetadas = comandoSQL1.executeUpdate() + comandoSQL2.executeUpdate() + comandoSQL3.executeUpdate();
+
+            if (linhasAfetadas >= 3) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+            retorno = false;
+        } finally {
+            try {
+                if (comandoSQL1 != null || comandoSQL2 != null || comandoSQL3 != null) {
+                    comandoSQL1.close();
+                    comandoSQL2.close();
+                    comandoSQL3.close();
+                }
+
+                Conexao.fecharConexao();
+
+            } catch (SQLException e) {
+            }
+        }
+
+        return retorno;
+    }
+
+    public static ArrayList<Cliente> consultarClientes(String txtBusca, String txtParametro) {
+        ResultSet rs = null;
+        Connection conexao = null;
+        PreparedStatement comandoSQL = null;
+        String parametro = "id";
+        ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+
+        switch (txtParametro) {
+            case "Código":
+                parametro = "id";
+                break;
+            default:
+                parametro = txtParametro.toLowerCase();
+                break;
+        }
+
+        try {
+            conexao = Conexao.abrirConexao();
+            comandoSQL = conexao.prepareStatement("SELECT cliente.id, cliente.nome, cliente.cpf, cliente.nascimento, cliente.sexo, cliente.estadoCivil,"
+                    + " contato.email, contato.tipoTelefone, contato.ddd, contato.telefone, "
+                    + "endereco.logradouro, endereco.bairro, endereco.complemento, endereco.cep, endereco.uf, endereco.cidade, endereco.numEndereco "
+                    + "FROM cliente INNER JOIN contato ON cliente.id = contato.id_cliente INNER JOIN endereco ON cliente.id = endereco.id_cliente WHERE " + parametro + " LIKE ?;");
+
+            comandoSQL.setString(1, "%" + txtBusca + "%");
+
+            rs = comandoSQL.executeQuery();
+
+            while (rs.next()) {
+                Cliente c = new Cliente();
+
+                //Dados Basicos
+                c.setId(rs.getInt("id"));
+                c.setNome(rs.getString("nome"));
+                c.setCpf(rs.getString("cpf"));
+                c.setNascimento(rs.getString("nascimento"));
+                c.setSexo(rs.getString("sexo"));
+                c.setEstadoCivil(rs.getString("estadoCivil"));
+
+                //Contato
+                c.setEmail(rs.getString("email"));
+                c.setTipoTelefone(rs.getString("tipoTelefone"));
+                c.setDdd(rs.getString("ddd"));
+                c.setTelefone(rs.getString("telefone"));
+
+                //Endereco
+                c.setLogradouro(rs.getString("logradouro"));
+                c.setBairro(rs.getString("bairro"));
+                c.setComplemento(rs.getString("complemento"));
+                c.setCep(rs.getString("cep"));
+                c.setUf(rs.getString("uf"));
+                c.setCidade(rs.getString("cidade"));
+                c.setNumEndereco(rs.getString("numEndereco"));
+
+                listaClientes.add(c);
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+            listaClientes = null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (comandoSQL != null) {
+                    comandoSQL.close();
+                }
+
+                Conexao.fecharConexao();
+
+            } catch (SQLException e) {
+            }
+        }
+        return listaClientes;
+    }
+
 }

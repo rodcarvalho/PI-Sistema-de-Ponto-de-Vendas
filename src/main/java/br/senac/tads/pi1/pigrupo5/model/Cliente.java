@@ -10,6 +10,7 @@ package br.senac.tads.pi1.pigrupo5.model;
  * @author rodrigocarvalho
  */
 public class Cliente {
+    private int id;
     private String nome, cpf, nascimento, sexo, estadoCivil;
     private String email, tipoTelefone, ddd, telefone;
     private String logradouro, bairro, complemento, cep, uf, cidade, numEndereco;
@@ -145,8 +146,12 @@ public class Cliente {
         this.numEndereco = numEndereco;
     }
 
-    
-    
-    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }

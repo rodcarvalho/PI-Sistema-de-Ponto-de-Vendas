@@ -7,6 +7,7 @@ package br.senac.tads.pi1.pigrupo5.view;
 
 import br.senac.tads.pi1.pigrupo5.controller.ClienteController;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,12 +18,45 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
 
     public String modoTela = "Adicionar";
     Cliente objCliente;
+    private int id;
 
     /**
      * Creates new form TelaCliente
      */
     public CadastroClienteFrame() {
         initComponents();
+        objCliente = new Cliente();
+        
+    }
+    
+    public CadastroClienteFrame(Cliente c) {
+        initComponents();
+        this.objCliente = c;
+        
+        //Id
+        this.id = c.getId();
+        
+        //Dados Básicos
+        this.txtNome.setText(c.getNome());
+        this.txtCPF.setText(c.getCpf());
+        this.txtNascimento.setText(c.getNascimento());
+        this.cbSexo.setSelectedItem(c.getSexo());
+        this.cbEstadoCivil.setSelectedItem(c.getEstadoCivil());
+        
+        //Contato
+        this.txtEmail.setText(c.getEmail());
+        this.cbTipoTelefone.setSelectedItem(c.getTipoTelefone());
+        this.txtDDD.setText(c.getDdd());
+        this.txtTelefone.setText(c.getTelefone());
+        
+        //Endereço
+        this.txtLogradouro.setText(c.getLogradouro());
+        this.txtBairro.setText(c.getBairro());
+        this.txtComplemento.setText(c.getComplemento());
+        this.txtCEP.setText(c.getCep());
+        this.cbUF.setSelectedItem(c.getUf());
+        this.txtCidade.setText(c.getCidade());
+        this.txtNumeroEndereco.setText(c.getNumEndereco());
     }
 
     /**
@@ -72,7 +106,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
         lblCidade = new javax.swing.JLabel();
         txtCidade = new javax.swing.JTextField();
         lblUF = new javax.swing.JLabel();
-        txtUF = new javax.swing.JComboBox<>();
+        cbUF = new javax.swing.JComboBox<>();
         txtNumeroEndereco = new javax.swing.JFormattedTextField();
         txtCEP = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
@@ -169,9 +203,11 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbEstadoCivil, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNascimento)))
-                    .addComponent(txtNome))
-                .addContainerGap())
+                            .addComponent(txtNascimento))
+                        .addContainerGap())
+                    .addGroup(pnlDadosLayout.createSequentialGroup()
+                        .addComponent(txtNome)
+                        .addGap(6, 6, 6))))
         );
         pnlDadosLayout.setVerticalGroup(
             pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,7 +319,12 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
 
         lblUF.setText("UF:");
 
-        txtUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SP", "MG", "RJ" }));
+        cbUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SP", "MG", "RJ" }));
+        cbUF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbUFActionPerformed(evt);
+            }
+        });
 
         try {
             txtNumeroEndereco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
@@ -329,7 +370,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblUF)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbUF, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCidade)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -361,7 +402,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
                         .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblUF)
                         .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel15))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -421,45 +462,69 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCPFActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+
+        boolean retorno = false;
+
+        //Dados Basicos
+        String nome = txtNome.getText(),
+                cpf = txtCPF.getText(),
+                nascimento = txtNascimento.getText(),
+                sexo = cbSexo.getSelectedItem().toString(),
+                estadoCivil = cbEstadoCivil.getSelectedItem().toString();
+
+        //Contato
+        String email = txtEmail.getText(),
+                tipoTelefone = cbTipoTelefone.getSelectedItem().toString(),
+                ddd = txtDDD.getText(),
+                telefone = txtTelefone.getText();
+
+        //Endereço
+        String logradouro = txtLogradouro.getText(),
+                numEndereco = txtNumeroEndereco.getText(),
+                bairro = txtBairro.getText(),
+                complemento = txtComplemento.getText(),
+                cep = txtCEP.getText(),
+                uf = cbUF.getSelectedItem().toString(),
+                cidade = txtCidade.getText();
+
         if (modoTela == "Adicionar") {
-            boolean retorno = false;
-
-            //Dados Basicos
-            String nome = txtNome.getText(),
-                    cpf = txtCPF.getText(),
-                    nascimento = txtNascimento.getText(),
-                    sexo = cbSexo.getSelectedItem().toString(),
-                    estadoCivil = cbEstadoCivil.getSelectedItem().toString();
-
-            //Contato
-            String email = txtEmail.getText(),
-                    tipoTelefone = cbTipoTelefone.getSelectedItem().toString(),
-                    ddd = txtDDD.getText(),
-                    telefone = txtTelefone.getText();
-
-            //Endereço
-            String logradouro = txtLogradouro.getText(),
-                    numEndereco = txtNumeroEndereco.getText(),
-                    bairro = txtBairro.getText(),
-                    complemento = txtComplemento.getText(),
-                    cep = txtCEP.getText(),
-                    uf = txtUF.getSelectedItem().toString(),
-                    cidade = txtCidade.getText();
-
             try {
-                retorno = ClienteController.salvar(nome, cpf, nascimento, sexo, estadoCivil,
+                retorno = ClienteController.salvar(0, 0, nome, cpf, nascimento, sexo, estadoCivil,
                         email, tipoTelefone, ddd, telefone,
                         logradouro, bairro, complemento, cep, uf, cidade, numEndereco);
-                
-                if(retorno) JOptionPane.showMessageDialog(this,"Cliente cadastrado com sucesso!");
-                else JOptionPane.showMessageDialog(this, "Erro ao cadastrar o cliente!");
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this,"Falha ao gravar no banco de dados!" + e.getMessage());
+
+                if (retorno) {
+                    JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao cadastrar o cliente!");
+                }
+
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(this, "Falha ao gravar no banco de dados!" + e.getMessage());
             }
 
+        } else {
+            try {
+                retorno = ClienteController.salvar(1, id, nome, cpf, nascimento, sexo, estadoCivil,
+                    email, tipoTelefone, ddd, telefone,
+                    logradouro, bairro, complemento, cep, uf, cidade, numEndereco);
+                
+                if(retorno){
+                    JOptionPane.showMessageDialog(this, "Cliente Alterado com Sucesso!");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao alterar o cliente!");
+                }
+            } catch (HeadlessException e) {
+            }
+            
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void cbUFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbUFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbUFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -508,6 +573,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbEstadoCivil;
     private javax.swing.JComboBox<String> cbSexo;
     private javax.swing.JComboBox<String> cbTipoTelefone;
+    private javax.swing.JComboBox<String> cbUF;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -545,6 +611,5 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JFormattedTextField txtNumeroEndereco;
     private javax.swing.JFormattedTextField txtTelefone;
-    private javax.swing.JComboBox<String> txtUF;
     // End of variables declaration//GEN-END:variables
 }
