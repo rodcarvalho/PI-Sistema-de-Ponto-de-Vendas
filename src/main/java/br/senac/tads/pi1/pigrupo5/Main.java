@@ -6,7 +6,7 @@
 package br.senac.tads.pi1.pigrupo5;
 
 import br.senac.tads.pi1.pigrupo5.view.PedidoFrame;
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+//import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -30,11 +30,11 @@ public class Main {
                 }
             }
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
-            try {
-                UIManager.setLookAndFeel(new WindowsLookAndFeel());
-            } catch (UnsupportedLookAndFeelException ex) {
-                Logger.getLogger(br.senac.tads.pi1.pigrupo5.Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                UIManager.setLookAndFeel(new WindowsLookAndFeel());
+//            } catch (UnsupportedLookAndFeelException ex) {
+//                Logger.getLogger(br.senac.tads.pi1.pigrupo5.Main.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         
         PedidoFrame telaInicial = new PedidoFrame();
