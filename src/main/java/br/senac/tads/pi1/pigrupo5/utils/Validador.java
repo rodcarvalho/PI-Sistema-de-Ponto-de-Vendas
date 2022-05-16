@@ -7,6 +7,7 @@ package br.senac.tads.pi1.pigrupo5.utils;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -19,7 +20,7 @@ public class Validador {
     public static ArrayList<String> getMensagensErro() {
         return mensagensErro;
     }
-    public static void ValidarNumero(JTextField txt) {
+    public static void ValidarInteiro(JTextField txt) {
         try {
             if (txt.getText().equals("")){
                 throw new  IllegalArgumentException();
@@ -33,6 +34,14 @@ public class Validador {
         } catch (IllegalArgumentException e) {
             mensagensErro.add("Digite um valor para o campo " + txt.getName());
             txt.setBackground(Color.red);
+        } catch (Exception e) {
+            mensagensErro.add(e.getMessage());
+        }
+        finally {
+            txt.setText("");
+            if (!mensagensErro.isEmpty()){
+               JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
+            }
         }
     }
 }

@@ -5,6 +5,12 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.dao.ClienteDAO;
+import br.senac.tads.pi1.pigrupo5.model.Cliente;
+import br.senac.tads.pi1.pigrupo5.utils.Validador;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kaio
@@ -14,8 +20,13 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
     /**
      * Creates new form SelecionarClienteFrame
      */
+    Cliente objCliente;
+    
     public SelecionarClienteFrame() {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        objCliente = new Cliente();
     }
 
     /**
@@ -29,8 +40,8 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        txfCPF = new javax.swing.JFormattedTextField();
+        btnAddCliente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -38,17 +49,22 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
         jLabel1.setText("CPF:");
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###.-##")));
+            txfCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###.-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txfCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
+                txfCPFActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Adicionar");
+        btnAddCliente.setText("Adicionar");
+        btnAddCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -58,10 +74,10 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(txfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAddCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -69,10 +85,10 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnAddCliente)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -96,9 +112,27 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+    private void txfCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCPFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+    }//GEN-LAST:event_txfCPFActionPerformed
+
+    private void btnAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClienteActionPerformed
+        
+        String cpf = txfCPF.getText();
+        cpf = cpf.replaceAll("[^a-zA-Z0-9]", "");
+        System.out.println("AQUI:" + cpf);
+        
+        ArrayList<Cliente> cliente = ClienteDAO.consultarClientes(cpf, "cpf");
+         
+        if (cliente.isEmpty()){
+            JOptionPane.showMessageDialog(this, "O CPF "+ txfCPF.getText() + " não pertence a nenhum cliente cadastrado. Verifique se o CPF está correto");
+            txfCPF.setText("");
+        } else {
+            System.out.println(cliente.get(0));
+            this.setVisible(false);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnAddClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,9 +170,9 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JButton btnAddCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JFormattedTextField txfCPF;
     // End of variables declaration//GEN-END:variables
 }
