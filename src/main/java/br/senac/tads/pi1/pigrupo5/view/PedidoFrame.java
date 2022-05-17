@@ -5,6 +5,8 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.model.Cliente;
+
 /**
  *
  * @author rodrigocarvalho
@@ -14,6 +16,8 @@ public class PedidoFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    
+    public Cliente c1;
     public PedidoFrame() {
         initComponents();
     }
@@ -53,11 +57,11 @@ public class PedidoFrame extends javax.swing.JFrame {
         lblNome = new javax.swing.JLabel();
         lblCPF = new javax.swing.JLabel();
         lblDataNascimento = new javax.swing.JLabel();
-        lblEstadoCivil = new javax.swing.JLabel();
-        lblGenero = new javax.swing.JLabel();
+        lblCEP = new javax.swing.JLabel();
+        lblLogradouro = new javax.swing.JLabel();
         lblTelefone = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
-        lblEndereço = new javax.swing.JLabel();
+        lblCidade = new javax.swing.JLabel();
         lblHeaderInfo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -343,15 +347,15 @@ public class PedidoFrame extends javax.swing.JFrame {
 
         lblDataNascimento.setText("Data de Nascimento:");
 
-        lblEstadoCivil.setText("Estado civil:");
+        lblCEP.setText("CEP:");
 
-        lblGenero.setText("Gênero:");
+        lblLogradouro.setText("Logradouro: ");
 
         lblTelefone.setText("Telefone:");
 
         lblEmail.setText("E-mail:");
 
-        lblEndereço.setText("Endereço:");
+        lblCidade.setText("Endereço:");
 
         lblHeaderInfo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         lblHeaderInfo.setText("Informações do Cliente");
@@ -368,15 +372,15 @@ public class PedidoFrame extends javax.swing.JFrame {
                             .addComponent(lblNome)
                             .addComponent(lblCPF)
                             .addComponent(lblDataNascimento)
-                            .addComponent(lblGenero))
+                            .addComponent(lblLogradouro))
                         .addGap(209, 209, 209)
                         .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEndereço)
-                            .addComponent(lblEmail)
+                            .addComponent(lblCidade)
                             .addComponent(lblTelefone)
-                            .addComponent(lblEstadoCivil)))
+                            .addComponent(lblCEP)
+                            .addComponent(lblEmail)))
                     .addComponent(lblHeaderInfo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(319, Short.MAX_VALUE))
         );
         pnlClienteLayout.setVerticalGroup(
             pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,21 +390,21 @@ public class PedidoFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlClienteLayout.createSequentialGroup()
-                        .addComponent(lblTelefone)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblEmail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEndereço))
+                        .addComponent(lblTelefone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCEP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCidade))
                     .addGroup(pnlClienteLayout.createSequentialGroup()
-                        .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNome)
-                            .addComponent(lblEstadoCivil))
+                        .addComponent(lblNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCPF)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblGenero)))
+                        .addComponent(lblLogradouro)))
                 .addContainerGap())
         );
 
@@ -488,7 +492,18 @@ public class PedidoFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void preencheInfoCliente(Cliente c) { 
+        this.lblNome.setText("Nome: " + c.getNome());
+        this.lblCPF.setText("CPF: " + c.getCpf());
+        this.lblDataNascimento.setText("Data de Nascimento: " + c.getNascimento());
+        this.lblLogradouro.setText("Logradouro: " + c.getLogradouro() + ", " + c.getNumEndereco());
+        this.lblCidade.setText("Cidade: " + c.getCidade());
+        this.lblCEP.setText("CEP: " + c.getCep());
+        this.lblEmail.setText("E-mail: " + c.getEmail());
+        this.lblTelefone.setText("Telefone: " + c.getDdd() + c.getTelefone());
+    }
+    
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
         SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame();
         SelecionarProduto.setVisible(true);
@@ -509,7 +524,7 @@ public class PedidoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuBuscaClienteActionPerformed
 
     private void btnAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustomerActionPerformed
-        SelecionarClienteFrame SelecionarCliente  = new SelecionarClienteFrame();
+        SelecionarClienteFrame SelecionarCliente  = new SelecionarClienteFrame(this);
         SelecionarCliente.setVisible(true);
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
@@ -572,15 +587,15 @@ public class PedidoFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblCEP;
     private javax.swing.JLabel lblCPF;
+    private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblDataNascimento;
     private javax.swing.JLabel lblDiscount;
     private javax.swing.JLabel lblDiscountValue;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblEndereço;
-    private javax.swing.JLabel lblEstadoCivil;
-    private javax.swing.JLabel lblGenero;
     private javax.swing.JLabel lblHeaderInfo;
+    private javax.swing.JLabel lblLogradouro;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblOpen;
     private javax.swing.JLabel lblSubtotal;

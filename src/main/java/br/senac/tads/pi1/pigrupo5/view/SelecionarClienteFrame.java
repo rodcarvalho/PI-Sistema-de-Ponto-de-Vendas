@@ -7,7 +7,6 @@ package br.senac.tads.pi1.pigrupo5.view;
 
 import br.senac.tads.pi1.pigrupo5.dao.ClienteDAO;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
-import br.senac.tads.pi1.pigrupo5.utils.Validador;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -21,10 +20,12 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
      * Creates new form SelecionarClienteFrame
      */
     Cliente objCliente;
+    PedidoFrame frame;
     
-    public SelecionarClienteFrame() {
+    public SelecionarClienteFrame(PedidoFrame f) {
         initComponents();
         
+        frame = f;
         setLocationRelativeTo(null);
         objCliente = new Cliente();
     }
@@ -49,7 +50,7 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
         jLabel1.setText("CPF:");
 
         try {
-            txfCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###.-##")));
+            txfCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -118,17 +119,13 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
 
     private void btnAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClienteActionPerformed
         
-        String cpf = txfCPF.getText();
-        cpf = cpf.replaceAll("[^a-zA-Z0-9]", "");
-        System.out.println("AQUI:" + cpf);
-        
-        ArrayList<Cliente> cliente = ClienteDAO.consultarClientes(cpf, "cpf");
-         
+        ArrayList<Cliente> cliente = ClienteDAO.consultarClientes(txfCPF.getText(), "cpf");
+        System.out.println(cliente.size());
         if (cliente.isEmpty()){
             JOptionPane.showMessageDialog(this, "O CPF "+ txfCPF.getText() + " não pertence a nenhum cliente cadastrado. Verifique se o CPF está correto");
             txfCPF.setText("");
         } else {
-            System.out.println(cliente.get(0));
+            frame.preencheInfoCliente(cliente.get(0));
             this.setVisible(false);
             this.dispose();
         }
