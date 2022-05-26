@@ -7,7 +7,11 @@ package br.senac.tads.pi1.pigrupo5.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -88,5 +92,56 @@ public class Conexao {
         
         return retorno;
     }
+    
+    public static void FecharConexaoProduto(Connection con){
+        
+        
+            try {
+                
+             if (con != null){   
+                con.close();
+            }    
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            
+        
+        
+    }
+    
+    public static void FecharConexaoProduto(Connection con, PreparedStatement comandoSQL1){
+        
+            FecharConexaoProduto(con);
+        
+            try {
+                
+             if (comandoSQL1 != null){   
+                comandoSQL1.close();
+            }    
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            
+         }
+    
+    public static void FecharConexaoProduto(Connection con, PreparedStatement comandoSQL1, ResultSet rs){
+        
+            FecharConexaoProduto(con, comandoSQL1);
+        
+            try {
+                
+             if (rs != null){   
+                rs.close();
+            }    
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            
+         }
+    
+    
     
 }
