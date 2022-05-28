@@ -5,29 +5,30 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
-import br.senac.tads.pi1.pigrupo5.view.RelatorioFrame;
+import br.senac.tads.pi1.pigrupo5.dao.RelatorioDAO;
+import br.senac.tads.pi1.pigrupo5.model.Relatorio;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
  * @author bispo
  */
 public class BuscaRelatorioFrame extends javax.swing.JFrame {
-
+    Relatorio objRelatorio;
+    
     /**
      * Creates new form ComprasPI
      */
     public BuscaRelatorioFrame() {
         initComponents();
-       DefaultTableModel Tabela1 = (DefaultTableModel)jTable1.getModel();
-        Object[] dados = {"0001","JOÃO","1","25,00", "12/02/2022"};
-         Object[] dados1 = {"0002","PEDRO","2","30,00", "13/02/2022"};
-          Object[] dados2 = {"0003","RICO","3","12,00", "14/02/2022"};
-        Tabela1.addRow(dados);
-        Tabela1.addRow(dados1);
-        Tabela1.addRow(dados2);
-                
+        objRelatorio = new Relatorio();
+        
+        CarregarJTableRelatorio("Cod. Pedido", "", null, null);
+
     }
 
     /**
@@ -41,14 +42,14 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblRelatorios = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         cbParametro = new javax.swing.JComboBox<>();
         txfBusca = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnVisualizar = new javax.swing.JButton();
         dcInicio = new com.toedter.calendar.JDateChooser();
         dcFim = new com.toedter.calendar.JDateChooser();
 
@@ -57,43 +58,48 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Relatório detalhado de vendas"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblRelatorios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Cod. Compra", "Cliente", "Qtd. Itens", "Valor Total", "Data"
+                "Cod. Pedido", "Cod. Cliente", "Nome", "CPF", "Valor Total", "Valor Desconto", "Data"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblRelatorios);
 
         jLabel3.setText("Buscar por:");
 
-        cbParametro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cod. Compra", "Cliente" }));
+        cbParametro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cod. Pedido", "Cod. Cliente", "Nome" }));
         cbParametro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbParametroActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Pesquisar");
-
-        jLabel1.setText("De:");
-
-        jLabel2.setText("até:");
-
-        jButton1.setText("VISUALIZAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Data Inicial:");
+
+        jLabel2.setText("Data Final:");
+
+        btnVisualizar.setText("Visualizar");
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarActionPerformed(evt);
             }
         });
 
@@ -104,30 +110,29 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVisualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(25, 25, 25))
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dcInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2)
-                                .addGap(12, 12, 12)
-                                .addComponent(dcFim, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbParametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txfBusca))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(dcInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(dcFim, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnPesquisar))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(cbParametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txfBusca)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -142,22 +147,20 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
                     .addComponent(cbParametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jButton2))
-                        .addComponent(dcFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(dcInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(btnPesquisar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dcFim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVisualizar)
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dcInicio, txfBusca});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dcFim, dcInicio, txfBusca});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,9 +172,7 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -181,9 +182,70 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbParametroActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new RelatorioFrame().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
+        if (tblRelatorios.getRowCount() > 0) {
+            int linha = tblRelatorios.getSelectedRow();
+
+            int idPedido = Integer.parseInt(tblRelatorios.getModel().getValueAt(linha, 0).toString());
+            int idCliente = Integer.parseInt(tblRelatorios.getModel().getValueAt(linha, 1).toString());
+            String nome = tblRelatorios.getModel().getValueAt(linha, 2).toString();
+            String cpf = tblRelatorios.getModel().getValueAt(linha, 3).toString();
+            double valorTotal = Double.parseDouble(tblRelatorios.getModel().getValueAt(linha, 4).toString().trim().replace("R$ ", ""));
+            double valorDesconto = Double.parseDouble(tblRelatorios.getModel().getValueAt(linha, 5).toString().trim().replace("R$ ", ""));
+            String dataPedido  = tblRelatorios.getModel().getValueAt(linha, 6).toString();
+            
+            objRelatorio.setId(idPedido);
+            objRelatorio.setIdCliente(idCliente);
+            objRelatorio.setNomeCliente(nome);
+            objRelatorio.setCpf(cpf);
+            objRelatorio.setTotal(valorTotal);
+            objRelatorio.setDesconto(valorDesconto);
+            objRelatorio.setDataRelatorio(dataPedido);
+            
+            RelatorioFrame relatorioFrame = new RelatorioFrame(objRelatorio);
+            relatorioFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um relatório da tabela!");
+        }
+    }//GEN-LAST:event_btnVisualizarActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        CarregarJTableRelatorio(cbParametro.getSelectedItem().toString(), txfBusca.getText(), dcInicio.getDate(), dcFim.getDate());
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void CarregarJTableRelatorio(String parametro, String busca, Date dataInicio, Date dataFim) {
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        ArrayList<Relatorio> listaRelatorios = RelatorioDAO.consultarRelatorios(parametro, busca, dataInicio, dataFim);
+        DefaultTableModel tmRelatorios = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tmRelatorios.addColumn("Cód. Pedido");
+        tmRelatorios.addColumn("Cód. Cliente");
+        tmRelatorios.addColumn("Nome Cliente");
+        tmRelatorios.addColumn("CPF");
+        tmRelatorios.addColumn("Valor Total");
+        tmRelatorios.addColumn("Valor Desc.");
+        tmRelatorios.addColumn("Data");
+
+        tblRelatorios.setModel(tmRelatorios);
+        tmRelatorios.setRowCount(0);
+
+        for (Relatorio r : listaRelatorios) {
+            tmRelatorios.addRow(new Object[]{r.getId(), r.getIdCliente(), r.getNomeCliente(), r.getCpf(), "R$ " + r.getTotal(), "R$ " + r.getDesconto(), formatador.format(r.getDataPedido())});
+        }
+
+        tblRelatorios.getColumnModel().getColumn(0).setPreferredWidth(50); // ID Pedido
+        tblRelatorios.getColumnModel().getColumn(1).setPreferredWidth(50); // ID Cliente
+        tblRelatorios.getColumnModel().getColumn(2).setPreferredWidth(50); // Nome
+        tblRelatorios.getColumnModel().getColumn(3).setPreferredWidth(50); // CPF
+        tblRelatorios.getColumnModel().getColumn(4).setPreferredWidth(50); // Valor Total
+        tblRelatorios.getColumnModel().getColumn(5).setPreferredWidth(50); // Valor Desconto
+        tblRelatorios.getColumnModel().getColumn(6).setPreferredWidth(50); // Data
+    }
 
     /**
      * @param args the command line arguments
@@ -236,17 +298,17 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPesquisar;
+    private javax.swing.JButton btnVisualizar;
     private javax.swing.JComboBox<String> cbParametro;
     private com.toedter.calendar.JDateChooser dcFim;
     private com.toedter.calendar.JDateChooser dcInicio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblRelatorios;
     private javax.swing.JTextField txfBusca;
     // End of variables declaration//GEN-END:variables
 }

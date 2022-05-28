@@ -501,7 +501,7 @@ public class PedidoFrame extends javax.swing.JFrame {
         this.lblCidade.setText("Cidade: " + c.getCidade());
         this.lblCEP.setText("CEP: " + c.getCep());
         this.lblEmail.setText("E-mail: " + c.getEmail());
-        this.lblTelefone.setText("Telefone: " + c.getDdd() + c.getTelefone());
+        this.lblTelefone.setText("Telefone: (" + c.getDdd() + ")" + c.getTelefone());
     }
     
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
@@ -529,8 +529,8 @@ public class PedidoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void mnuProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutoActionPerformed
-        ProdutoFrame Produto = new ProdutoFrame();
-        Produto.setVisible(true);
+        BuscarProdutoFrame BuscaProduto = new BuscarProdutoFrame();
+        BuscaProduto.setVisible(true);
     }//GEN-LAST:event_mnuProdutoActionPerformed
 
     private void mnuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRelatorioActionPerformed

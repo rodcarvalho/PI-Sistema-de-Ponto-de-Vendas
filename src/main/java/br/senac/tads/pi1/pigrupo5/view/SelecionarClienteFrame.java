@@ -22,6 +22,11 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
     Cliente objCliente;
     PedidoFrame frame;
     
+    
+    public SelecionarClienteFrame() {
+        initComponents();   
+    }
+    
     public SelecionarClienteFrame(PedidoFrame f) {
         initComponents();
         
@@ -119,7 +124,7 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
 
     private void btnAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClienteActionPerformed
         
-        ArrayList<Cliente> cliente = ClienteDAO.consultarClientes(txfCPF.getText(), "cpf");
+        ArrayList<Cliente> cliente = ClienteDAO.consultarClientes("cpf", txfCPF.getText());
         System.out.println(cliente.size());
         if (cliente.isEmpty()){
             JOptionPane.showMessageDialog(this, "O CPF "+ txfCPF.getText() + " não pertence a nenhum cliente cadastrado. Verifique se o CPF está correto");
