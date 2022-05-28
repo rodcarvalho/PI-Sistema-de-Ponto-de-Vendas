@@ -505,7 +505,7 @@ public class PedidoFrame extends javax.swing.JFrame {
     }
     
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
-        SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame();
+        SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame(this);
         SelecionarProduto.setVisible(true);
     }//GEN-LAST:event_btnAddItemActionPerformed
 

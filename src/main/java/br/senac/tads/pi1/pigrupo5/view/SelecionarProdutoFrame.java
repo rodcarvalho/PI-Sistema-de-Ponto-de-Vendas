@@ -5,7 +5,10 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
+import br.senac.tads.pi1.pigrupo5.model.Produto;
 import br.senac.tads.pi1.pigrupo5.utils.Validador;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,12 +19,25 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     /**
      * Creates new form SelecionarProdutoFrame
      */
-    private Validador validacao;
+    private Validador validadorCod;
+    private Validador validadorQtd;
     
-    public SelecionarProdutoFrame() {
+    private boolean codValido = false;
+    private boolean qtdValida = false;
+    
+    PedidoFrame frame;
+    ArrayList<Produto> objProdutos;
+    
+    public SelecionarProdutoFrame(PedidoFrame f) {
         initComponents();
         
-        validacao = new Validador();
+        frame = f;
+        validadorCod = new Validador();
+        validadorQtd = new Validador();
+    }
+
+    private SelecionarProdutoFrame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -47,12 +63,14 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Quantidade:");
 
+        txfCodProduto.setName("Código Produto"); // NOI18N
         txfCodProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfCodProdutoActionPerformed(evt);
             }
         });
 
+        txfQtdProduto.setName("Quantidade"); // NOI18N
         txfQtdProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfQtdProdutoActionPerformed(evt);
@@ -125,10 +143,19 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void buscarProduto(int idProduto) {
+        objProdutos = ProdutoDAO.buscaProduto(idProduto);
+        
+        System.out.println("PRODUTOS: " + objProdutos.get(0).getNome());
+    }
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        validacao.ValidarInteiro(this.txfCodProduto);
-        validacao.ValidarInteiro(this.txfQtdProduto);
+        codValido = validadorCod.ValidarInteiro(this.txfCodProduto);
+        qtdValida = validadorQtd.ValidarInteiro(this.txfQtdProduto);
+        
+        if (codValido && qtdValida) {
+            buscarProduto(Integer.parseInt(txfCodProduto.getText()));
+        }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void txfCodProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCodProdutoActionPerformed
