@@ -16,12 +16,14 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     /**
      * Creates new form SelecionarProdutoFrame
      */
-    private Validador validacao;
+    private Validador validadorCod;
+    private Validador validadorQtd;
     
     public SelecionarProdutoFrame() {
         initComponents();
         
-        validacao = new Validador();
+        validadorCod = new Validador();
+        validadorQtd = new Validador();
     }
 
     /**
@@ -47,12 +49,14 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Quantidade:");
 
+        txfCodProduto.setName("Código Produto"); // NOI18N
         txfCodProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfCodProdutoActionPerformed(evt);
             }
         });
 
+        txfQtdProduto.setName("Quantidade"); // NOI18N
         txfQtdProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfQtdProdutoActionPerformed(evt);
@@ -127,8 +131,8 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        validacao.ValidarInteiro(this.txfCodProduto);
-        validacao.ValidarInteiro(this.txfQtdProduto);
+        validadorCod.ValidarInteiro(this.txfCodProduto);
+        validadorQtd.ValidarInteiro(this.txfQtdProduto);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void txfCodProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCodProdutoActionPerformed

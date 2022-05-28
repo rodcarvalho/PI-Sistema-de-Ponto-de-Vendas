@@ -41,6 +41,7 @@ public class Validador {
             txt.setText("");
             if (!mensagensErro.isEmpty()){
                JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
+               mensagensErro.clear();
             }
         }
     }
