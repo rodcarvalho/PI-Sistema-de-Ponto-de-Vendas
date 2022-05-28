@@ -20,7 +20,7 @@ public class Validador {
     public static ArrayList<String> getMensagensErro() {
         return mensagensErro;
     }
-    public static void ValidarInteiro(JTextField txt) {
+    public static boolean ValidarInteiro(JTextField txt) {
         try {
             if (txt.getText().equals("")){
                 throw new  IllegalArgumentException();
@@ -28,17 +28,23 @@ public class Validador {
             
             int valorConvertido = Integer.parseInt(txt.getText());
             txt.setBackground(Color.white);
+            return true;
         } catch (NumberFormatException e) {
             mensagensErro.add("Falha ao converter o valor do campo " + txt.getName() + " em inteiro");
             txt.setBackground(Color.red);
+            txt.setText("");
+            return false;
         } catch (IllegalArgumentException e) {
             mensagensErro.add("Digite um valor para o campo " + txt.getName());
             txt.setBackground(Color.red);
+            txt.setText("");
+            return false;
         } catch (Exception e) {
             mensagensErro.add(e.getMessage());
+            txt.setText("");
+            return false;
         }
         finally {
-            txt.setText("");
             if (!mensagensErro.isEmpty()){
                JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
                mensagensErro.clear();
