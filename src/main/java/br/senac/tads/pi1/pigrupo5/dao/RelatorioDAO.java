@@ -19,7 +19,15 @@ import java.util.Date;
  * @author Kaio
  */
 public class RelatorioDAO {
-
+/**
+ * Consultando Relatorios com base nos Adicionados nos Bancos de Dados.
+ * 
+ * @param cbParametro
+ * @param txfBusca
+ * @param dataInicio
+ * @param dataFim
+ * @return 
+ */
     public static ArrayList<Relatorio> consultarRelatorios(String cbParametro, String txfBusca, Date dataInicio, Date dataFim) {
         ResultSet rs = null;
         Connection conexao = null;
