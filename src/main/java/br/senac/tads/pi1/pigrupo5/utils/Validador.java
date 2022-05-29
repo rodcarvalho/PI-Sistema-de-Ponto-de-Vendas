@@ -16,10 +16,19 @@ import javax.swing.JTextField;
  */
 public class Validador {
     public static ArrayList<String> mensagensErro = new ArrayList<>();
-    
+    /**
+     * validando mesagens de erro
+     * @return 
+     */
     public static ArrayList<String> getMensagensErro() {
         return mensagensErro;
     }
+    /**
+     * validando Textos, e mostrando mensagens de erro.
+     * 
+     * @param txt = escrito pelo ususario 
+     * @return 
+     */
     public static boolean ValidarInteiro(JTextField txt) {
         try {
             if (txt.getText().equals("")){

@@ -17,6 +17,29 @@ public class ClienteController {
     // 0 - Adicionar
     // 1 - Atualizar
     // Id = 0 para adicionar
+    /**
+     * Cadastrar ou Adicionar Novo Cliente, utilizando os parametros dados abaixo como informações guardadas no banco
+     * 
+     * @param parametro
+     * @param id
+     * @param nome
+     * @param cpf
+     * @param nascimento
+     * @param sexo
+     * @param estadoCivil
+     * @param email
+     * @param tipoTelefone
+     * @param ddd
+     * @param telefone
+     * @param logradouro
+     * @param bairro
+     * @param complemento
+     * @param cep
+     * @param uf
+     * @param cidade
+     * @param numEndereco
+     * @return 
+     */
     public static boolean salvar(int parametro, int id, String nome, String cpf, String nascimento, String sexo, String estadoCivil,
             String email, String tipoTelefone, String ddd, String telefone,
             String logradouro, String bairro, String complemento, String cep, String uf, String cidade, String numEndereco) {
