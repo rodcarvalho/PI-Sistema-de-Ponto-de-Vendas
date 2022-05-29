@@ -14,16 +14,22 @@ import java.util.Date;
  */
 public class Pedido {
  
+    int id;
     Date data = new Date();
-    private ArrayList<Produto> produtos = new ArrayList<Produto>();
-    private ArrayList<Integer> quantidades = new ArrayList<Integer>();
-    String clienteNome = new String("");
-    String clienteCPF = new String("");
+    double desconto;
+    double total;
+    int idCliente;  
 
     public Pedido() {
     }
 
-    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Date getData() {
         return data;
@@ -33,42 +39,27 @@ public class Pedido {
         this.data = data;
     }
 
-    public ArrayList<Produto> getProdutos() {
-        return produtos;
-    }
-    
-    
-    public void setProdutos(ArrayList<Produto> produtos) {
-        this.produtos = produtos;
+    public double getDesconto() {
+        return desconto;
     }
 
-     public void insertProduct(Produto prod) {
-        produtos.add(prod);
-    }
-     
-    
-    public ArrayList<Integer> getQuantidades() {
-        return quantidades;
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
     }
 
-    public void setQuantidades(ArrayList<Integer> quantidades) {
-        this.quantidades = quantidades;
+    public double getTotal() {
+        return total;
     }
 
-    public String getClienteNome() {
-        return clienteNome;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public void setClienteNome(String clienteNome) {
-        this.clienteNome = clienteNome;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public String getClienteCPF() {
-        return clienteCPF;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
-
-    public void setClienteCPF(String clienteCPF) {
-        this.clienteCPF = clienteCPF;
-    }
-    
 }
