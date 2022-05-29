@@ -6,6 +6,10 @@
 package br.senac.tads.pi1.pigrupo5.view;
 
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
+import br.senac.tads.pi1.pigrupo5.model.Produto;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -17,9 +21,12 @@ public class PedidoFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     
-    public Cliente c1;
+    public Cliente c;
+    public ArrayList<Produto> itensLista = new ArrayList<Produto>();
+    
     public PedidoFrame() {
         initComponents();
+        configuraTable();
     }
 
     /**
@@ -502,6 +509,62 @@ public class PedidoFrame extends javax.swing.JFrame {
         this.lblCEP.setText("CEP: " + c.getCep());
         this.lblEmail.setText("E-mail: " + c.getEmail());
         this.lblTelefone.setText("Telefone: (" + c.getDdd() + ")" + c.getTelefone());
+    }
+    
+    public void addItemNaLista(Produto p) {
+        if (itensLista.isEmpty()){
+            itensLista.add(p);
+        } else {
+            boolean naoExiste = true;
+            for (Produto prod: itensLista) {
+                if (prod.getId() == p.getId()) {
+                    naoExiste = false;
+                    prod.setQtdEstoque(prod.getQtdEstoque() + p.getQtdEstoque());
+                }
+            }
+            if (naoExiste) {
+                itensLista.add(p);
+            }
+        }
+        
+        atualizaTable();
+    }
+    
+    private void configuraTable() {
+        DefaultTableModel tmItens = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        tmItens.addColumn("Código");
+        tmItens.addColumn("Nome");
+        tmItens.addColumn("Quantidade");
+        tmItens.addColumn("Valor Unitário");
+        tmItens.addColumn("Valor do Item");
+        tblOrderItens.setModel(tmItens);
+        
+        tmItens.setRowCount(0);
+        
+        tblOrderItens.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblOrderItens.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tblOrderItens.getColumnModel().getColumn(2).setPreferredWidth(10);
+        tblOrderItens.getColumnModel().getColumn(3).setPreferredWidth(10);
+        tblOrderItens.getColumnModel().getColumn(4).setPreferredWidth(10);
+    }
+    public void atualizaTable() {
+        DefaultTableModel tmItens = (DefaultTableModel) tblOrderItens.getModel();
+        tmItens.setRowCount(0);
+        for (Produto p: itensLista) {
+            tmItens.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getQtdEstoque(),
+                p.getValor(),
+                p.getQtdEstoque() * p.getValor()
+            });
+        }
     }
     
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed

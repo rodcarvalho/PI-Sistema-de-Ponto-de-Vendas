@@ -105,7 +105,6 @@ public class ProdutoDAO {
      }
      
     public static ArrayList<Produto> buscaProduto(int idBusca) {
-        System.out.println("AQUIIIIII = " + idBusca);
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement comandoSQL = null;
@@ -116,13 +115,13 @@ public class ProdutoDAO {
             comandoSQL = conexao.prepareStatement("SELECT id, qtdEstoque, valor, nome, descricao, modelo, cor, marca  FROM produto WHERE id = ?");
             
             comandoSQL.setInt(1, idBusca);
-            System.out.println(comandoSQL);
+            
             rs = comandoSQL.executeQuery();
             
             while(rs.next()) {
                 Produto p = new Produto();
                 
-                p.setCodproduto(rs.getInt("id"));
+                p.setId(rs.getInt("id"));
                 p.setQtdEstoque(rs.getInt("qtdEstoque"));
                 p.setValor(rs.getDouble("valor"));
                 p.setNome(rs.getString("nome"));
@@ -131,7 +130,7 @@ public class ProdutoDAO {
                 p.setCor(rs.getString("cor"));
                 p.setMarca(rs.getString("marca"));
                 
-                listaProdutos.add(p); 
+                listaProdutos.add(p);
             }
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
@@ -151,5 +150,35 @@ public class ProdutoDAO {
         }
         return listaProdutos;
     }
-     
+    
+    public static boolean decrementaQtd(int idProd, int qtd) {
+        Connection conexao = null;
+        PreparedStatement comandoSQL = null;
+        boolean retorno = false;
+        
+        try {
+            conexao = Conexao.abrirConexao();
+            comandoSQL = conexao.prepareStatement("UPDATE produto SET qtdEstoque = ? WHERE id = ?");
+            comandoSQL.setInt(1, qtd);
+            comandoSQL.setInt(2, idProd);
+            
+            int linhasAfetadas =  comandoSQL.executeUpdate();
+            
+            if (linhasAfetadas >= 1) {
+                retorno = true;
+            }
+        } catch(ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (comandoSQL != null) {
+                    comandoSQL.close();
+                }
+                Conexao.fecharConexao();
+            } catch (SQLException e) {
+                
+            }
+        }
+        return retorno;
+    }
 }

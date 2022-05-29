@@ -9,6 +9,7 @@ import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
 import br.senac.tads.pi1.pigrupo5.utils.Validador;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +28,7 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     
     PedidoFrame frame;
     ArrayList<Produto> objProdutos;
+    Produto p;
     
     public SelecionarProdutoFrame(PedidoFrame f) {
         initComponents();
@@ -146,15 +148,31 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     
     private void buscarProduto(int idProduto) {
         objProdutos = ProdutoDAO.buscaProduto(idProduto);
-        
-        System.out.println("PRODUTOS: " + objProdutos.get(0).getNome());
+        if (!objProdutos.isEmpty()) {
+            p = objProdutos.get(0);
+        }
     }
+    
+    private void verificaQtd(int qtdPedida) {
+        if (p.getQtdEstoque() >= qtdPedida) {
+            p.setQtdEstoque(qtdPedida);
+            frame.addItemNaLista(p);
+            this.setVisible(false);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "QUANTIDADE INSUFICIENTE DE: " + p.getNome()
+                                          + "\n Quantidade  estoque: " + p.getQtdEstoque()
+                                          + "\n Quantidade solicitada: " + qtdPedida);
+        }
+    }
+    
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         codValido = validadorCod.ValidarInteiro(this.txfCodProduto);
         qtdValida = validadorQtd.ValidarInteiro(this.txfQtdProduto);
         
         if (codValido && qtdValida) {
             buscarProduto(Integer.parseInt(txfCodProduto.getText()));
+            verificaQtd(Integer.parseInt(txfQtdProduto.getText()));
         }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
