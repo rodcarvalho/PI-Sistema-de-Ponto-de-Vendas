@@ -192,17 +192,20 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (tblClientes.getRowCount() > 0) {
             int linha = tblClientes.getSelectedRow();
+            
+            if (linha >= 0) {
+                int Id = Integer.parseInt(tblClientes.getModel().getValueAt(linha, 0).toString());
 
-            int Id = Integer.parseInt(tblClientes.getModel().getValueAt(linha, 0).toString());
-
-            if (ClienteDAO.excluir(Id)) {
-                JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso.");
+                if (ClienteDAO.excluir(Id)) {
+                    JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Falha ao excluir cliente.");
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Falha ao excluir cliente.");
+                JOptionPane.showMessageDialog(this, "Selecione um cliente.");
             }
-
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione um cliente.");
+            JOptionPane.showMessageDialog(this, "Não existem clientes cadastrados");
         }
 
         CarregarJTableCliente("Código", "");
