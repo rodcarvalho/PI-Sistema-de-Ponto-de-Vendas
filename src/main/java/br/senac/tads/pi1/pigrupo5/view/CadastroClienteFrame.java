@@ -505,26 +505,26 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
         if (validador.ObrigarCampo(this.txtNome) && validador.ObrigarCampo(this.txtCPF) && validador.ObrigarCampo(this.txtEmail) && validador.ObrigarCampo(this.txtEmail) && validador.ObrigarCampo(this.txtDDD) && validador.ObrigarCampo(this.txtTelefone)) {
 
             //Dados Basicos
-            String nome = txtNome.getText(),
-                    cpf = txtCPF.getText(),
-                    nascimento = txtNascimento.getText(),
-                    sexo = cbSexo.getSelectedItem().toString(),
+            String nome = txtNome.getText().trim(),
+                    cpf = txtCPF.getText().trim(),
+                    nascimento = txtNascimento.getText().trim(),
+                    sexo = cbSexo.getSelectedItem().toString().trim(),
                     estadoCivil = cbEstadoCivil.getSelectedItem().toString();
 
             //Contato
-            String email = txtEmail.getText(),
+            String email = txtEmail.getText().trim(),
                     tipoTelefone = cbTipoTelefone.getSelectedItem().toString(),
-                    ddd = txtDDD.getText(),
-                    telefone = txtTelefone.getText();
+                    ddd = txtDDD.getText().trim(),
+                    telefone = txtTelefone.getText().trim();
 
             //Endereço
-            String logradouro = txtLogradouro.getText(),
-                    numEndereco = txtNumeroEndereco.getText(),
-                    bairro = txtBairro.getText(),
-                    complemento = txtComplemento.getText(),
-                    cep = txtCEP.getText(),
-                    uf = cbUF.getSelectedItem().toString(),
-                    cidade = txtCidade.getText();
+            String logradouro = txtLogradouro.getText().trim(),
+                    numEndereco = txtNumeroEndereco.getText().trim(),
+                    bairro = txtBairro.getText().trim(),
+                    complemento = txtComplemento.getText().trim(),
+                    cep = txtCEP.getText().trim(),
+                    uf = cbUF.getSelectedItem().toString().trim(),
+                    cidade = txtCidade.getText().trim();
 
             if (modoTela == "Adicionar") {
                 try {
