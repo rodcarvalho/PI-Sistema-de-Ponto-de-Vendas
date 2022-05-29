@@ -6,6 +6,11 @@
 package br.senac.tads.pi1.pigrupo5.view;
 
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
+import br.senac.tads.pi1.pigrupo5.model.Produto;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -17,9 +22,12 @@ public class PedidoFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     
-    public Cliente c1;
+    public Cliente c;
+    public ArrayList<Produto> itensLista = new ArrayList<Produto>();
+    
     public PedidoFrame() {
         initComponents();
+        configuraTable();
     }
 
     /**
@@ -280,7 +288,12 @@ public class PedidoFrame extends javax.swing.JFrame {
             }
         });
 
-        btnEditItem.setText("Editar Item");
+        btnEditItem.setText("Editar Quantidade");
+        btnEditItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditItemActionPerformed(evt);
+            }
+        });
 
         btnAddItem.setText("Adicionar Item");
         btnAddItem.addActionListener(new java.awt.event.ActionListener() {
@@ -501,16 +514,87 @@ public class PedidoFrame extends javax.swing.JFrame {
         this.lblCidade.setText("Cidade: " + c.getCidade());
         this.lblCEP.setText("CEP: " + c.getCep());
         this.lblEmail.setText("E-mail: " + c.getEmail());
-        this.lblTelefone.setText("Telefone: " + c.getDdd() + c.getTelefone());
+        this.lblTelefone.setText("Telefone: (" + c.getDdd() + ")" + c.getTelefone());
+    }
+    
+    public void alteraNaLista(Produto p,int index) {
+        itensLista.get(index).setQtdEstoque(p.getQtdEstoque());
+        atualizaTable();
+    }
+    
+    public void addItemNaLista(Produto p) {
+        if (itensLista.isEmpty()){
+            itensLista.add(p);
+        } else {
+            boolean naoExiste = true;
+            for (Produto prod: itensLista) {
+                if (prod.getId() == p.getId()) {
+                    naoExiste = false;
+                    prod.setQtdEstoque(prod.getQtdEstoque() + p.getQtdEstoque());
+                }
+            }
+            if (naoExiste) {
+                itensLista.add(p);
+            }
+        }
+        
+        atualizaTable();
+    }
+    
+    private void configuraTable() {
+        DefaultTableModel tmItens = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        tmItens.addColumn("Código");
+        tmItens.addColumn("Nome");
+        tmItens.addColumn("Quantidade");
+        tmItens.addColumn("Valor Unitário");
+        tmItens.addColumn("Valor do Item");
+        tblOrderItens.setModel(tmItens);
+        
+        tmItens.setRowCount(0);
+        
+        tblOrderItens.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblOrderItens.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tblOrderItens.getColumnModel().getColumn(2).setPreferredWidth(10);
+        tblOrderItens.getColumnModel().getColumn(3).setPreferredWidth(10);
+        tblOrderItens.getColumnModel().getColumn(4).setPreferredWidth(10);
+    }
+    public void atualizaTable() {
+        DefaultTableModel tmItens = (DefaultTableModel) tblOrderItens.getModel();
+        tmItens.setRowCount(0);
+        for (Produto p: itensLista) {
+            tmItens.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getQtdEstoque(),
+                p.getValor(),
+                p.getQtdEstoque() * p.getValor()
+            });
+        }
     }
     
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
-        SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame();
+        SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame(this);
         SelecionarProduto.setVisible(true);
     }//GEN-LAST:event_btnAddItemActionPerformed
 
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
-        // TODO add your handling code here:
+        if (tblOrderItens.getRowCount() > 0) {
+            int linha = tblOrderItens.getSelectedRow();
+            if (linha >= 0) {
+                itensLista.remove(linha);
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um item da lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Não existem itens na lista");
+        }
+        atualizaTable();
     }//GEN-LAST:event_btnDeleteItemActionPerformed
 
     private void mnuCadastroCLienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroCLienteActionPerformed
@@ -529,14 +613,31 @@ public class PedidoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddCustomerActionPerformed
 
     private void mnuProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProdutoActionPerformed
-        ProdutoFrame Produto = new ProdutoFrame();
-        Produto.setVisible(true);
+        BuscarProdutoFrame BuscaProduto = new BuscarProdutoFrame();
+        BuscaProduto.setVisible(true);
     }//GEN-LAST:event_mnuProdutoActionPerformed
 
     private void mnuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRelatorioActionPerformed
         BuscaRelatorioFrame BuscaRelatorio = new BuscaRelatorioFrame();
         BuscaRelatorio.setVisible(true);
     }//GEN-LAST:event_mnuRelatorioActionPerformed
+
+    private void btnEditItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditItemActionPerformed
+        if (tblOrderItens.getRowCount() > 0) {
+            int linha = tblOrderItens.getSelectedRow();
+            if (linha >= 0) {
+                Produto p = itensLista.get(linha);
+                SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame(this, p, linha);
+                SelecionarProduto.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um item da lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Não existem itens na lista");
+        }
+        atualizaTable();
+    }//GEN-LAST:event_btnEditItemActionPerformed
 
     /**
      * @param args the command line arguments

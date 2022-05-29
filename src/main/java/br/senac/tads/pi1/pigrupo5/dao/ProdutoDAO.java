@@ -225,6 +225,81 @@ public class ProdutoDAO {
            return produtos;
      }
      
+    public static ArrayList<Produto> buscaProduto(int idBusca) {
+        ResultSet rs = null;
+        Connection conexao = null;
+        PreparedStatement comandoSQL = null;
+        ArrayList<Produto> listaProdutos = new ArrayList<Produto>();
+        
+        try {
+            conexao = Conexao.abrirConexao();
+            comandoSQL = conexao.prepareStatement("SELECT id, qtdEstoque, valor, nome, descricao, modelo, cor, marca  FROM produto WHERE id = ?");
+            
+            comandoSQL.setInt(1, idBusca);
+            
+            rs = comandoSQL.executeQuery();
+            
+            while(rs.next()) {
+                Produto p = new Produto();
+                
+                p.setId(rs.getInt("id"));
+                p.setQtdEstoque(rs.getInt("qtdEstoque"));
+                p.setValor(rs.getDouble("valor"));
+                p.setNome(rs.getString("nome"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setModelo(rs.getString("modelo"));
+                p.setCor(rs.getString("cor"));
+                p.setMarca(rs.getString("marca"));
+                
+                listaProdutos.add(p);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+             listaProdutos = null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (comandoSQL != null) {
+                    comandoSQL.close();
+                }
+                
+                Conexao.fecharConexao();
+            } catch (SQLException e) {
+            }
+        }
+        return listaProdutos;
+    }
     
-     
+    public static boolean decrementaQtd(int idProd, int qtd) {
+        Connection conexao = null;
+        PreparedStatement comandoSQL = null;
+        boolean retorno = false;
+        
+        try {
+            conexao = Conexao.abrirConexao();
+            comandoSQL = conexao.prepareStatement("UPDATE produto SET qtdEstoque = ? WHERE id = ?");
+            comandoSQL.setInt(1, qtd);
+            comandoSQL.setInt(2, idProd);
+            
+            int linhasAfetadas =  comandoSQL.executeUpdate();
+            
+            if (linhasAfetadas >= 1) {
+                retorno = true;
+            }
+        } catch(ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (comandoSQL != null) {
+                    comandoSQL.close();
+                }
+                Conexao.fecharConexao();
+            } catch (SQLException e) {
+                
+            }
+        }
+        return retorno;
+    }
 }

@@ -193,7 +193,7 @@ public class ClienteDAO {
         return retorno;
     }
 
-    public static ArrayList<Cliente> consultarClientes(String txtBusca, String txtParametro) {
+    public static ArrayList<Cliente> consultarClientes(String txtParametro, String txtBusca) {
         ResultSet rs = null;
         Connection conexao = null;
         PreparedStatement comandoSQL = null;
@@ -268,5 +268,5 @@ public class ClienteDAO {
         }
         return listaClientes;
     }
-
+    
 }

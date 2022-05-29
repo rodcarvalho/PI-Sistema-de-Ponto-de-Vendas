@@ -41,7 +41,7 @@
                       <Component id="txtParametro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtBusca" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnPesquisa" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -64,8 +64,8 @@
                   <Component id="btnPesquisa" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblBusca" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtParametro" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtBusca" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtParametro" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -143,6 +143,8 @@
         <Property name="text" type="java.lang.String" value="Busca por:"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JTextField" name="txtBusca">
+    </Component>
     <Component class="javax.swing.JComboBox" name="txtParametro">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -157,7 +159,6 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="txtParametroItemStateChanged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtParametroActionPerformed"/>
       </Events>
       <AuxValues>
@@ -194,11 +195,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="txtBusca">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

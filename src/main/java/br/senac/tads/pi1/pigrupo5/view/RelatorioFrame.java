@@ -5,6 +5,8 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.model.Relatorio;
+
 /**
  *
  * @author bispo
@@ -16,6 +18,10 @@ public class RelatorioFrame extends javax.swing.JFrame {
      */
     public RelatorioFrame() {
         initComponents();
+    }
+
+    RelatorioFrame(Relatorio objRelatorio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

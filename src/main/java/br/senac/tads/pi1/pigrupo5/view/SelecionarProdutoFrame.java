@@ -5,7 +5,11 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
+import br.senac.tads.pi1.pigrupo5.model.Produto;
 import br.senac.tads.pi1.pigrupo5.utils.Validador;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,12 +20,37 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     /**
      * Creates new form SelecionarProdutoFrame
      */
-    private Validador validacao;
+    private Validador validadorCod = new Validador();
+    private Validador validadorQtd = new Validador();
     
-    public SelecionarProdutoFrame() {
+    private boolean codValido = false;
+    private boolean qtdValida = false;
+    
+    PedidoFrame frame;
+    ArrayList<Produto> objProdutos;
+    Produto prod;
+    int index = -1;
+    
+    public SelecionarProdutoFrame(PedidoFrame f) {
         initComponents();
         
-        validacao = new Validador();
+        frame = f;
+    }
+    
+    public SelecionarProdutoFrame(PedidoFrame f, Produto p, int i) {
+        initComponents();
+        frame = f;
+        prod = p;
+        index = i;
+        
+        txfCodProduto.setText(Integer.toString(prod.getId()));
+        txfCodProduto.setEnabled(false);
+        txfQtdProduto.setText(Integer.toString(prod.getQtdEstoque()));
+        btnAdicionar.setText("Alterar");
+    }
+
+    private SelecionarProdutoFrame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -47,12 +76,14 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Quantidade:");
 
+        txfCodProduto.setName("Código Produto"); // NOI18N
         txfCodProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfCodProdutoActionPerformed(evt);
             }
         });
 
+        txfQtdProduto.setName("Quantidade"); // NOI18N
         txfQtdProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfQtdProdutoActionPerformed(evt);
@@ -125,10 +156,39 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void buscarProduto(int idProduto) {
+        objProdutos = ProdutoDAO.buscaProduto(idProduto);
+        if (!objProdutos.isEmpty()) {
+            prod = objProdutos.get(0);
+        }
+    }
+    
+    private void verificaQtd(int qtdPedida) {
+        if (prod.getQtdEstoque() >= qtdPedida) {
+            prod.setQtdEstoque(qtdPedida);
+            if (index >= 0) {
+                frame.alteraNaLista(prod, index);
+            } else {
+                frame.addItemNaLista(prod);
+            }
+            this.setVisible(false);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "QUANTIDADE INSUFICIENTE DE: " + prod.getNome()
+                                          + "\n Quantidade  estoque: " + prod.getQtdEstoque()
+                                          + "\n Quantidade solicitada: " + qtdPedida);
+        }
+    }
+    
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        validacao.ValidarInteiro(this.txfCodProduto);
-        validacao.ValidarInteiro(this.txfQtdProduto);
+        codValido = validadorCod.ValidarInteiro(this.txfCodProduto);
+        qtdValida = validadorQtd.ValidarInteiro(this.txfQtdProduto);
+        
+        if (codValido && qtdValida) {
+            buscarProduto(Integer.parseInt(txfCodProduto.getText()));
+            verificaQtd(Integer.parseInt(txfQtdProduto.getText()));
+        }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void txfCodProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfCodProdutoActionPerformed

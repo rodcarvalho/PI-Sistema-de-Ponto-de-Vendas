@@ -6,9 +6,6 @@
 package br.senac.tads.pi1.pigrupo5;
 
 import br.senac.tads.pi1.pigrupo5.view.PedidoFrame;
-//import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
