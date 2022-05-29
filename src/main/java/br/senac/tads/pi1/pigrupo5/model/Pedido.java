@@ -18,7 +18,7 @@ public class Pedido {
     Date data = new Date();
     double desconto;
     double total;
-    int idCliente;  
+    int idCliente;
 
     public Pedido() {
     }
