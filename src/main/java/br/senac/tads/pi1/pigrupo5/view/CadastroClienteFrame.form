@@ -75,17 +75,26 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="pnlTabbed" max="32767" attributes="0"/>
-                  <Component id="pnlDados" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnSalvar" min="-2" pref="135" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="pnlTabbed" min="-2" pref="444" max="-2" attributes="0"/>
+                          <Component id="pnlDados" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="51" max="32767" attributes="0"/>
-              <Component id="btnSalvar" min="-2" pref="135" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -97,7 +106,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlTabbed" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnSalvar" min="-2" pref="44" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnSalvar" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -180,14 +196,17 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lblNome">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nome:"/>
+            <Property name="text" type="java.lang.String" value="Nome*:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNome">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtNomeKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCPF">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CPF:"/>
+            <Property name="text" type="java.lang.String" value="CPF*:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblSexo">
@@ -304,7 +323,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="lblTelefone" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtTelefone" pref="139" max="32767" attributes="0"/>
+                              <Component id="txtTelefone" pref="117" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -314,21 +333,21 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDDD" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtDDD" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbTipoTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDDD" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtDDD" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="41" max="32767" attributes="0"/>
+                      <EmptySpace pref="24" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -336,14 +355,17 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="lblEmail">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Email:"/>
+                <Property name="text" type="java.lang.String" value="Email*:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtEmail">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtEmailKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblTelefone">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Telefone:"/>
+                <Property name="text" type="java.lang.String" value="Telefone*:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblTipo">
@@ -370,7 +392,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblDDD">
               <Properties>
-                <Property name="text" type="java.lang.String" value="DDD:"/>
+                <Property name="text" type="java.lang.String" value="DDD*:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="txtTelefone">
@@ -383,7 +405,7 @@
             <Component class="javax.swing.JFormattedTextField" name="txtDDD">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-                  <Format format="###" subtype="-1" type="5"/>
+                  <Format format="##" subtype="-1" type="5"/>
                 </Property>
               </Properties>
             </Component>
@@ -411,25 +433,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtBairro" min="-2" pref="140" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblComplemento" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtComplemento" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtLogradouro" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblNumero" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtNumeroEndereco" min="-2" pref="61" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
                               <Component id="txtCEP" min="-2" pref="76" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblUF" min="-2" max="-2" attributes="0"/>
@@ -438,10 +441,26 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblCidade" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtCidade" min="-2" pref="128" max="-2" attributes="0"/>
+                              <Component id="txtCidade" pref="121" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="txtBairro" min="-2" pref="140" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblComplemento" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtComplemento" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="txtLogradouro" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblNumero" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtNumeroEndereco" min="-2" pref="86" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -451,18 +470,22 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblLogradouro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtLogradouro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblNumero" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNumeroEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblLogradouro" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtLogradouro" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNumero" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="txtNumeroEndereco" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblBairro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtBairro" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblBairro" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtBairro" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="txtComplemento" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -476,7 +499,7 @@
                           </Group>
                           <Component id="jLabel15" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="16" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -569,6 +592,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Os campos marcados com um asterisco (*)"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="s&#xe3;o obrigat&#xf3;rios."/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

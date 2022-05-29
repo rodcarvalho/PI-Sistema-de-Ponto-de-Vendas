@@ -6,9 +6,13 @@
 package br.senac.tads.pi1.pigrupo5.utils;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 /**
  *
@@ -17,9 +21,11 @@ import javax.swing.JTextField;
 public class Validador {
     public static ArrayList<String> mensagensErro = new ArrayList<>();
     
+    
     public static ArrayList<String> getMensagensErro() {
         return mensagensErro;
     }
+    
     public static boolean ValidarInteiro(JTextField txt) {
         try {
             if (txt.getText().equals("")){
@@ -50,5 +56,22 @@ public class Validador {
                mensagensErro.clear();
             }
         }
+    }
+    
+    
+    public static boolean ObrigarCampo(JTextField txt){
+        boolean retorno;
+        int comprimento = (int)txt.getSize().getHeight();
+        if(txt.getText().replace("-", "").replace(".","").trim().equals("")){
+            txt.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+            retorno = false;
+        }else{
+            txt.setBorder(new JTextField().getBorder());
+            
+            retorno = true;
+        }
+        
+        txt.setPreferredSize(new Dimension(22,comprimento));
+        return retorno;
     }
 }

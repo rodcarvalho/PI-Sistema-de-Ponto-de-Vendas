@@ -85,6 +85,12 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
             }
         });
 
+        txfBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txfBuscaKeyTyped(evt);
+            }
+        });
+
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,10 +148,11 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbParametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txfBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txfBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(cbParametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(dcInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,7 +167,7 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dcFim, dcInicio, txfBusca});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dcFim, dcInicio});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,6 +220,12 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
         CarregarJTableRelatorio(cbParametro.getSelectedItem().toString(), txfBusca.getText(), dcInicio.getDate(), dcFim.getDate());
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
+    private void txfBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBuscaKeyTyped
+        if ((txfBusca.getText() + evt.getKeyChar()).length() > 50) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txfBuscaKeyTyped
+
     private void CarregarJTableRelatorio(String parametro, String busca, Date dataInicio, Date dataFim) {
         SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
         ArrayList<Relatorio> listaRelatorios = RelatorioDAO.consultarRelatorios(parametro, busca, dataInicio, dataFim);
@@ -240,8 +253,8 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
 
         tblRelatorios.getColumnModel().getColumn(0).setPreferredWidth(50); // ID Pedido
         tblRelatorios.getColumnModel().getColumn(1).setPreferredWidth(50); // ID Cliente
-        tblRelatorios.getColumnModel().getColumn(2).setPreferredWidth(50); // Nome
-        tblRelatorios.getColumnModel().getColumn(3).setPreferredWidth(50); // CPF
+        tblRelatorios.getColumnModel().getColumn(2).setPreferredWidth(70); // Nome
+        tblRelatorios.getColumnModel().getColumn(3).setPreferredWidth(70); // CPF
         tblRelatorios.getColumnModel().getColumn(4).setPreferredWidth(50); // Valor Total
         tblRelatorios.getColumnModel().getColumn(5).setPreferredWidth(50); // Valor Desconto
         tblRelatorios.getColumnModel().getColumn(6).setPreferredWidth(50); // Data
