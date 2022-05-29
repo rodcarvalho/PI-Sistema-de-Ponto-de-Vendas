@@ -561,8 +561,11 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnEditItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Editar Item"/>
+                <Property name="text" type="java.lang.String" value="Editar Quantidade"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditItemActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnAddItem">
               <Properties>

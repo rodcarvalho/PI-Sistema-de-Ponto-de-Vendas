@@ -288,7 +288,12 @@ public class PedidoFrame extends javax.swing.JFrame {
             }
         });
 
-        btnEditItem.setText("Editar Item");
+        btnEditItem.setText("Editar Quantidade");
+        btnEditItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditItemActionPerformed(evt);
+            }
+        });
 
         btnAddItem.setText("Adicionar Item");
         btnAddItem.addActionListener(new java.awt.event.ActionListener() {
@@ -512,6 +517,11 @@ public class PedidoFrame extends javax.swing.JFrame {
         this.lblTelefone.setText("Telefone: (" + c.getDdd() + ")" + c.getTelefone());
     }
     
+    public void alteraNaLista(Produto p,int index) {
+        itensLista.get(index).setQtdEstoque(p.getQtdEstoque());
+        atualizaTable();
+    }
+    
     public void addItemNaLista(Produto p) {
         if (itensLista.isEmpty()){
             itensLista.add(p);
@@ -576,7 +586,6 @@ public class PedidoFrame extends javax.swing.JFrame {
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
         if (tblOrderItens.getRowCount() > 0) {
             int linha = tblOrderItens.getSelectedRow();
-            System.out.println("Linha = " + linha);
             if (linha >= 0) {
                 itensLista.remove(linha);
             } else {
@@ -612,6 +621,23 @@ public class PedidoFrame extends javax.swing.JFrame {
         BuscaRelatorioFrame BuscaRelatorio = new BuscaRelatorioFrame();
         BuscaRelatorio.setVisible(true);
     }//GEN-LAST:event_mnuRelatorioActionPerformed
+
+    private void btnEditItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditItemActionPerformed
+        if (tblOrderItens.getRowCount() > 0) {
+            int linha = tblOrderItens.getSelectedRow();
+            if (linha >= 0) {
+                Produto p = itensLista.get(linha);
+                SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame(this, p, linha);
+                SelecionarProduto.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um item da lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Não existem itens na lista");
+        }
+        atualizaTable();
+    }//GEN-LAST:event_btnEditItemActionPerformed
 
     /**
      * @param args the command line arguments
