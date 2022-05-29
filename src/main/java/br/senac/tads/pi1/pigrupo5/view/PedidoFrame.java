@@ -8,6 +8,7 @@ package br.senac.tads.pi1.pigrupo5.view;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -573,7 +574,18 @@ public class PedidoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddItemActionPerformed
 
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
-        // TODO add your handling code here:
+        if (tblOrderItens.getRowCount() > 0) {
+            int linha = tblOrderItens.getSelectedRow();
+            System.out.println("Linha = " + linha);
+            if (linha >= 0) {
+                itensLista.remove(linha);
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um item da lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Não existem itens na lista");
+        }
+        atualizaTable();
     }//GEN-LAST:event_btnDeleteItemActionPerformed
 
     private void mnuCadastroCLienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroCLienteActionPerformed
