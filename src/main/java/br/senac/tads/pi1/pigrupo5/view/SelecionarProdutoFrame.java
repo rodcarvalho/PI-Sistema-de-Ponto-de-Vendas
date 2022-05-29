@@ -20,22 +20,33 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     /**
      * Creates new form SelecionarProdutoFrame
      */
-    private Validador validadorCod;
-    private Validador validadorQtd;
+    private Validador validadorCod = new Validador();
+    private Validador validadorQtd = new Validador();
     
     private boolean codValido = false;
     private boolean qtdValida = false;
     
     PedidoFrame frame;
     ArrayList<Produto> objProdutos;
-    Produto p;
+    Produto prod;
+    int index = -1;
     
     public SelecionarProdutoFrame(PedidoFrame f) {
         initComponents();
         
         frame = f;
-        validadorCod = new Validador();
-        validadorQtd = new Validador();
+    }
+    
+    public SelecionarProdutoFrame(PedidoFrame f, Produto p, int i) {
+        initComponents();
+        frame = f;
+        prod = p;
+        index = i;
+        
+        txfCodProduto.setText(Integer.toString(prod.getId()));
+        txfCodProduto.setEnabled(false);
+        txfQtdProduto.setText(Integer.toString(prod.getQtdEstoque()));
+        btnAdicionar.setText("Alterar");
     }
 
     private SelecionarProdutoFrame() {
@@ -149,19 +160,23 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     private void buscarProduto(int idProduto) {
         objProdutos = ProdutoDAO.buscaProduto(idProduto);
         if (!objProdutos.isEmpty()) {
-            p = objProdutos.get(0);
+            prod = objProdutos.get(0);
         }
     }
     
     private void verificaQtd(int qtdPedida) {
-        if (p.getQtdEstoque() >= qtdPedida) {
-            p.setQtdEstoque(qtdPedida);
-            frame.addItemNaLista(p);
+        if (prod.getQtdEstoque() >= qtdPedida) {
+            prod.setQtdEstoque(qtdPedida);
+            if (index >= 0) {
+                frame.alteraNaLista(prod, index);
+            } else {
+                frame.addItemNaLista(prod);
+            }
             this.setVisible(false);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "QUANTIDADE INSUFICIENTE DE: " + p.getNome()
-                                          + "\n Quantidade  estoque: " + p.getQtdEstoque()
+            JOptionPane.showMessageDialog(this, "QUANTIDADE INSUFICIENTE DE: " + prod.getNome()
+                                          + "\n Quantidade  estoque: " + prod.getQtdEstoque()
                                           + "\n Quantidade solicitada: " + qtdPedida);
         }
     }

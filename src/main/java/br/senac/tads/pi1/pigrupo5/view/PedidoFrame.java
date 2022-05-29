@@ -8,6 +8,7 @@ package br.senac.tads.pi1.pigrupo5.view;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -23,6 +24,9 @@ public class PedidoFrame extends javax.swing.JFrame {
     
     public Cliente c;
     public ArrayList<Produto> itensLista = new ArrayList<Produto>();
+    double total = 0.0;
+    double desconto = 0.0;
+    double subtotal = 0.0;
     
     public PedidoFrame() {
         initComponents();
@@ -60,6 +64,7 @@ public class PedidoFrame extends javax.swing.JFrame {
         btnDeleteItem = new javax.swing.JButton();
         btnEditItem = new javax.swing.JButton();
         btnAddItem = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         pnlCliente = new javax.swing.JPanel();
         lblNome = new javax.swing.JLabel();
         lblCPF = new javax.swing.JLabel();
@@ -116,13 +121,13 @@ public class PedidoFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlOrderItens, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pnlOrderItens, javax.swing.GroupLayout.PREFERRED_SIZE, 756, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(pnlOrderItens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnlOrderItens)
         );
 
         pnlValueLabels.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -219,7 +224,7 @@ public class PedidoFrame extends javax.swing.JFrame {
                             .addComponent(lblTotalValue)
                             .addComponent(lblDiscountValue, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSubtotalValue, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 20, Short.MAX_VALUE))
+                        .addGap(0, 23, Short.MAX_VALUE))
                     .addComponent(pnlDiscountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -287,7 +292,12 @@ public class PedidoFrame extends javax.swing.JFrame {
             }
         });
 
-        btnEditItem.setText("Editar Item");
+        btnEditItem.setText("Editar Quantidade");
+        btnEditItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditItemActionPerformed(evt);
+            }
+        });
 
         btnAddItem.setText("Adicionar Item");
         btnAddItem.addActionListener(new java.awt.event.ActionListener() {
@@ -322,6 +332,13 @@ public class PedidoFrame extends javax.swing.JFrame {
 
         pnlItensButtonsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAddItem, btnDeleteItem});
 
+        jButton1.setText("Aplicar Desconto");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlButtonsLayout = new javax.swing.GroupLayout(pnlButtons);
         pnlButtons.setLayout(pnlButtonsLayout);
         pnlButtonsLayout.setHorizontalGroup(
@@ -329,7 +346,8 @@ public class PedidoFrame extends javax.swing.JFrame {
             .addGroup(pnlButtonsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddCustomer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                     .addComponent(btnFinishOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlItensButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -341,10 +359,14 @@ public class PedidoFrame extends javax.swing.JFrame {
                 .addComponent(pnlItensButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(btnAddCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFinishOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFinishOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        pnlButtonsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAddCustomer, btnFinishOrder, jButton1});
 
         pnlCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -364,7 +386,8 @@ public class PedidoFrame extends javax.swing.JFrame {
 
         lblCidade.setText("Endereço:");
 
-        lblHeaderInfo.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        lblHeaderInfo.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        lblHeaderInfo.setForeground(new java.awt.Color(51, 51, 51));
         lblHeaderInfo.setText("Informações do Cliente");
 
         javax.swing.GroupLayout pnlClienteLayout = new javax.swing.GroupLayout(pnlCliente);
@@ -387,14 +410,14 @@ public class PedidoFrame extends javax.swing.JFrame {
                             .addComponent(lblCEP)
                             .addComponent(lblEmail)))
                     .addComponent(lblHeaderInfo))
-                .addContainerGap(319, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlClienteLayout.setVerticalGroup(
             pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlClienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblHeaderInfo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlClienteLayout.createSequentialGroup()
                         .addComponent(lblEmail)
@@ -485,16 +508,16 @@ public class PedidoFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnlOpenHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addComponent(pnlButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlValueLabels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -509,6 +532,41 @@ public class PedidoFrame extends javax.swing.JFrame {
         this.lblCEP.setText("CEP: " + c.getCep());
         this.lblEmail.setText("E-mail: " + c.getEmail());
         this.lblTelefone.setText("Telefone: (" + c.getDdd() + ")" + c.getTelefone());
+    }
+    
+    public void calculaSubtotal() {
+        subtotal = 0;
+        for (Produto p: itensLista) {
+            int qtd = p.getQtdEstoque();
+            double valorUnit = p.getValor();
+            
+            double valorItem = qtd * valorUnit;
+            
+            subtotal += valorItem;
+        }
+        this.lblSubtotalValue.setText(Double.toString(subtotal));
+    }
+    
+    public void inserirDesconto(double desc) {
+        desconto = desc;
+        
+        if (desconto > 0) {
+            this.lblDiscountValue.setText(Double.toString(desconto));
+        }
+        
+        atualizaTable();
+    }
+    
+    public void calculaTotal() {
+        calculaSubtotal();
+        total = subtotal - desconto;
+        
+        this.lblTotalValue.setText(Double.toString(total));
+    }
+    
+    public void alteraNaLista(Produto p,int index) {
+        itensLista.get(index).setQtdEstoque(p.getQtdEstoque());
+        atualizaTable();
     }
     
     public void addItemNaLista(Produto p) {
@@ -565,6 +623,8 @@ public class PedidoFrame extends javax.swing.JFrame {
                 p.getQtdEstoque() * p.getValor()
             });
         }
+        
+        calculaTotal();
     }
     
     private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
@@ -573,7 +633,17 @@ public class PedidoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddItemActionPerformed
 
     private void btnDeleteItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteItemActionPerformed
-        // TODO add your handling code here:
+        if (tblOrderItens.getRowCount() > 0) {
+            int linha = tblOrderItens.getSelectedRow();
+            if (linha >= 0) {
+                itensLista.remove(linha);
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um item da lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Não existem itens na lista");
+        }
+        atualizaTable();
     }//GEN-LAST:event_btnDeleteItemActionPerformed
 
     private void mnuCadastroCLienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroCLienteActionPerformed
@@ -600,6 +670,28 @@ public class PedidoFrame extends javax.swing.JFrame {
         BuscaRelatorioFrame BuscaRelatorio = new BuscaRelatorioFrame();
         BuscaRelatorio.setVisible(true);
     }//GEN-LAST:event_mnuRelatorioActionPerformed
+
+    private void btnEditItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditItemActionPerformed
+        if (tblOrderItens.getRowCount() > 0) {
+            int linha = tblOrderItens.getSelectedRow();
+            if (linha >= 0) {
+                Produto p = itensLista.get(linha);
+                SelecionarProdutoFrame SelecionarProduto = new SelecionarProdutoFrame(this, p, linha);
+                SelecionarProduto.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um item da lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Não existem itens na lista");
+        }
+        atualizaTable();
+    }//GEN-LAST:event_btnEditItemActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DescontoFrame descontoFrame = new DescontoFrame(this);
+        descontoFrame.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -645,6 +737,7 @@ public class PedidoFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteItem;
     private javax.swing.JButton btnEditItem;
     private javax.swing.JButton btnFinishOrder;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
