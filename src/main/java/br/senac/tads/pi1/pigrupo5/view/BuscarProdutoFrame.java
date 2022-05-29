@@ -4,6 +4,7 @@ package br.senac.tads.pi1.pigrupo5.view;
 
 import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -14,6 +15,8 @@ import javax.swing.table.TableRowSorter;
  * @author wellington
  */
 public class BuscarProdutoFrame extends javax.swing.JFrame {
+    
+     Produto objProduto;
 
     /**
      * Creates new form BuscarProdutoFrame
@@ -22,6 +25,7 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
         initComponents();
         DefaultTableModel tabela = (DefaultTableModel) tblProdutos.getModel();
         tblProdutos.setRowSorter(new TableRowSorter(tabela));
+        objProduto = new Produto();
         ListaProdutoJtable();
     }
     
@@ -51,6 +55,32 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
         }
     
     }
+    public void ListaProdutoJtableBusca(String busca, String txtParamentro){
+        // mostrar dados do produto na Jtable
+        
+        DefaultTableModel tabela = (DefaultTableModel) tblProdutos.getModel();
+        
+        //evitar duplicação ao inserir novo produto
+        tabela.setNumRows(0);
+        
+        ProdutoDAO pdao = new ProdutoDAO();
+
+        for (Produto p: pdao.ListaBusca(busca,txtParamentro)){
+            
+            tabela.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getCodproduto(),
+                p.getQtdEstoque(),
+                p.getValor(),
+                p.getMarca(),
+                p.getModelo(),
+                p.getCor(),
+                p.getCor()
+            });
+        }
+    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,7 +93,7 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         lblBusca = new javax.swing.JLabel();
-        txtParametro = new javax.swing.JComboBox<>();
+        txtParamentro = new javax.swing.JComboBox<>();
         txtBusca = new javax.swing.JTextField();
         btnPesquisa = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -76,10 +106,10 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
 
         lblBusca.setText("Busca por:");
 
-        txtParametro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código Produto", "Nome" }));
-        txtParametro.addActionListener(new java.awt.event.ActionListener() {
+        txtParamentro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código Produto", "Nome" }));
+        txtParamentro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtParametroActionPerformed(evt);
+                txtParamentroActionPerformed(evt);
             }
         });
 
@@ -133,6 +163,11 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblProdutos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblProdutosKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblProdutos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -146,7 +181,7 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(lblBusca)
                             .addGap(18, 18, 18)
-                            .addComponent(txtParametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtParamentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,7 +204,7 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBusca)
                     .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtParametro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtParamentro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,30 +230,99 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtParametroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtParametroActionPerformed
+    private void txtParamentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtParamentroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtParametroActionPerformed
+    }//GEN-LAST:event_txtParamentroActionPerformed
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
-
+    
+        String paramentro = "codproduto";
+        
+        if (txtParamentro.getSelectedItem().toString().equals("Nome")){
+            paramentro = "nome";
+      
+        }
+    
+        ListaProdutoJtableBusca(txtBusca.getText(),paramentro);
+        
+        
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
+    
+        if (tblProdutos.getSelectedRow() != -1){
+            
+            Produto p = new Produto();
+            ProdutoDAO dao = new ProdutoDAO();
+            
+            p.setId((int)tblProdutos.getValueAt(tblProdutos.getSelectedRow(),0));
+            
+            dao.Excluir(p);
+            
+            ListaProdutoJtable();
+   
+        } else{
+        JOptionPane.showMessageDialog(null, "Selecione um produto para excluir");
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+      
+        if(tblProdutos.getSelectedRow() != -1){
+            
+         //nome, codproduto, qtdEstoque, valor, marca, modelo, cor, descricao
+            int linha = tblProdutos.getSelectedRow();
+            int id = Integer.parseInt(tblProdutos.getModel().getValueAt(linha, 0).toString());
+            
+            String nome = tblProdutos.getModel().getValueAt(linha, 1).toString();
+            String codproduto = tblProdutos.getModel().getValueAt(linha, 2).toString();
+            String qtdEstoque = tblProdutos.getModel().getValueAt(linha, 3).toString();
+            String valor = tblProdutos.getModel().getValueAt(linha, 4).toString();
+            String marca = tblProdutos.getModel().getValueAt(linha, 5).toString();
+            String modelo = tblProdutos.getModel().getValueAt(linha, 6).toString();
+            String cor = tblProdutos.getModel().getValueAt(linha, 7).toString();
+            String descricao = tblProdutos.getModel().getValueAt(linha, 8).toString();
+            
+            objProduto.setId(id);
+            objProduto.setNome(nome);
+            objProduto.setCodproduto(Integer.parseInt(codproduto));
+            objProduto.setQtdEstoque(Integer.parseInt(qtdEstoque));
+            objProduto.setValor(Double.parseDouble(valor));
+            objProduto.setMarca(marca);
+            objProduto.setModelo(modelo);
+            objProduto.setCor(cor);
+            objProduto.setDescricao(descricao);
+            
+            CadastroProdutoFrame cadastroproduto = new CadastroProdutoFrame(objProduto);
+            cadastroproduto.setVisible(true);
+            btnAlterar.setVisible(true);
 
+           
+           
+            
+
+            
+           } else {
+            JOptionPane.showMessageDialog(this, "Selecione um produto da tabela!");
+        
+            
+        }
+        
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        CadastroProdutoFrame ProdutoCliente = new CadastroProdutoFrame();
-        ProdutoCliente.setVisible(true);
+        CadastroProdutoFrame cadastroproduto = new CadastroProdutoFrame();
+        cadastroproduto.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscaActionPerformed
+
+    private void tblProdutosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdutosKeyReleased
+
+       
+    }//GEN-LAST:event_tblProdutosKeyReleased
 
     /**
      * @param args the command line arguments
@@ -265,6 +369,6 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblBusca;
     private javax.swing.JTable tblProdutos;
     private javax.swing.JTextField txtBusca;
-    private javax.swing.JComboBox<String> txtParametro;
+    private javax.swing.JComboBox<String> txtParamentro;
     // End of variables declaration//GEN-END:variables
 }
