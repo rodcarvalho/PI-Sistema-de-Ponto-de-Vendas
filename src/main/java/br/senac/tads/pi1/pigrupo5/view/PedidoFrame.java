@@ -11,10 +11,10 @@ import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
 import br.senac.tads.pi1.pigrupo5.model.Pedido;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -33,6 +33,7 @@ public class PedidoFrame extends javax.swing.JFrame {
     
     public PedidoFrame() {
         initComponents();
+        setLocationRelativeTo(null);
         configuraTable();
     }
 
@@ -81,6 +82,7 @@ public class PedidoFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnuProduto = new javax.swing.JMenuItem();
+        mnuCadastroProduto = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mnuBuscaCliente = new javax.swing.JMenuItem();
         mnuCadastroCLiente = new javax.swing.JMenuItem();
@@ -448,13 +450,21 @@ public class PedidoFrame extends javax.swing.JFrame {
 
         jMenu1.setText("Produtos");
 
-        mnuProduto.setText("Produtos");
+        mnuProduto.setText("Buscar Produto");
         mnuProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuProdutoActionPerformed(evt);
             }
         });
         jMenu1.add(mnuProduto);
+
+        mnuCadastroProduto.setText("Adicionar Produto");
+        mnuCadastroProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadastroProdutoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuCadastroProduto);
 
         jMenuBar1.add(jMenu1);
 
@@ -532,10 +542,11 @@ public class PedidoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     public void preencheInfoCliente(Cliente c) {
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
         cliente = c;
         this.lblNome.setText("Nome: " + cliente.getNome());
         this.lblCPF.setText("CPF: " + cliente.getCpf());
-        this.lblDataNascimento.setText("Data de Nascimento: " + cliente.getNascimento());
+        this.lblDataNascimento.setText("Data de Nascimento: " + formatador.format(cliente.getNascimento()));
         this.lblLogradouro.setText("Logradouro: " + cliente.getLogradouro() + ", " + cliente.getNumEndereco());
         this.lblCidade.setText("Cidade: " + cliente.getCidade());
         this.lblCEP.setText("CEP: " + cliente.getCep());
@@ -761,6 +772,11 @@ public class PedidoFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFinishOrderActionPerformed
 
+    private void mnuCadastroProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroProdutoActionPerformed
+        CadastroProdutoFrame cadastroproduto = new CadastroProdutoFrame();
+        cadastroproduto.setVisible(true);
+    }//GEN-LAST:event_mnuCadastroProdutoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -829,6 +845,7 @@ public class PedidoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblTotalValue;
     private javax.swing.JMenuItem mnuBuscaCliente;
     private javax.swing.JMenuItem mnuCadastroCLiente;
+    private javax.swing.JMenuItem mnuCadastroProduto;
     private javax.swing.JMenuItem mnuProduto;
     private javax.swing.JMenuItem mnuRelatorio;
     private javax.swing.JPanel pnlButtons;

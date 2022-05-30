@@ -5,9 +5,11 @@
  */
 package br.senac.tads.pi1.pigrupo5.utils;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -87,7 +89,30 @@ public class Validador {
             }
         }
     }
-
+    
+    
+    public static boolean CompararData(JDateChooser dcInicio, JDateChooser dcFim ) {
+        Date dataInicio = dcInicio.getDate();
+        Date dataFim = dcFim.getDate();
+        
+        if(dataFim == null)
+            dataFim = new Date();
+        
+        if(dataInicio == null)
+            dataInicio = new Date(100,0,0,0,0);
+        
+        if (dataInicio.before(dataFim)) {
+            dcInicio.setBorder(new JDateChooser().getBorder());
+            dcFim.setBorder(new JDateChooser().getBorder());
+            return true;
+        } else {
+            dcInicio.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            dcFim.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            return false;
+        }
+        
+    }
+    
     public static boolean ObrigarCampo(JTextField txt) {
         boolean retorno;
         int comprimento = (int) txt.getSize().getHeight();

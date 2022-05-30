@@ -33,7 +33,7 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     
     public SelecionarProdutoFrame(PedidoFrame f) {
         initComponents();
-        
+        setLocationRelativeTo(null);
         frame = f;
     }
     

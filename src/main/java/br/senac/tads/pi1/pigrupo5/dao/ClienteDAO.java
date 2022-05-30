@@ -41,7 +41,7 @@ public class ClienteDAO {
             //Dados Basicos
             comandoSQL1.setString(1, c.getNome());
             comandoSQL1.setString(2, c.getCpf());
-            comandoSQL1.setString(3, c.getNascimento());
+            comandoSQL1.setDate(3, new java.sql.Date(c.getNascimento().getTime()));
             comandoSQL1.setString(4, c.getSexo());
             comandoSQL1.setString(5, c.getEstadoCivil());
 
@@ -125,7 +125,7 @@ public class ClienteDAO {
             //Dados Basicos
             comandoSQL3.setString(1, c.getNome());
             comandoSQL3.setString(2, c.getCpf());
-            comandoSQL3.setString(3, c.getNascimento());
+            comandoSQL3.setDate(3, new java.sql.Date(c.getNascimento().getTime()));
             comandoSQL3.setString(4, c.getSexo());
             comandoSQL3.setString(5, c.getEstadoCivil());
             comandoSQL3.setInt(6, c.getId());
@@ -248,7 +248,7 @@ public class ClienteDAO {
                 c.setId(rs.getInt("id"));
                 c.setNome(rs.getString("nome"));
                 c.setCpf(rs.getString("cpf"));
-                c.setNascimento(rs.getString("nascimento"));
+                c.setNascimento(rs.getDate("nascimento"));
                 c.setSexo(rs.getString("sexo"));
                 c.setEstadoCivil(rs.getString("estadoCivil"));
 
