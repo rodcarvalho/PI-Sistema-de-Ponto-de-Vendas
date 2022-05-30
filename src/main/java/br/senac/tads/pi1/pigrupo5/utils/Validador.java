@@ -128,5 +128,22 @@ public class Validador {
         txt.setPreferredSize(new Dimension(22, comprimento));
         return retorno;
     }
+    
+    public static boolean ObrigarCampo(JDateChooser data) {
+        boolean retorno;
+        int altura = (int) data.getSize().getHeight();
+        Date data1 = data.getDate();
+        
+        if (data1 == null || data1.after(new Date())) {
+            data.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            retorno = false;
+        } else {
+            data.setBorder(new JDateChooser().getBorder());
+            retorno = true;
+        }
+
+        data.setPreferredSize(new Dimension(22, altura));
+        return retorno;
+    }
 
 }

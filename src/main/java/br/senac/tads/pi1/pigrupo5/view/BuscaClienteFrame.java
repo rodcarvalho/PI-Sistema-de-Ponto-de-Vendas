@@ -198,8 +198,12 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
             if (linha >= 0) {
                 int Id = Integer.parseInt(tblClientes.getModel().getValueAt(linha, 0).toString());
 
-                if (ClienteDAO.excluir(Id)) {
-                    JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso.");
+                if (ClienteDAO.excluirContatoEndereco(Id)) {
+                    if(ClienteDAO.excluirDadosContato(Id)){
+                        JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso.");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Cliente vinculado a um pedido, foi armazenado os dados basicos.");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "Falha ao excluir cliente.");
                 }
@@ -216,7 +220,7 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         if (tblClientes.getRowCount() > 0) {
             int linha = tblClientes.getSelectedRow();
-            if (linha == 0) {
+            if (linha >= 0) {
                 int id = Integer.parseInt(tblClientes.getModel().getValueAt(linha, 0).toString());
                 String nome = tblClientes.getModel().getValueAt(linha, 1).toString();
                 String cpf = tblClientes.getModel().getValueAt(linha, 2).toString();

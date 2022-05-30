@@ -161,7 +161,7 @@ public class ClienteDAO {
  * @param Id
  * @return 
  */
-    public static boolean excluir(int Id) {
+    public static boolean excluirContatoEndereco(int Id) {
         boolean retorno = false;
         Connection conexao = null;
         PreparedStatement comandoSQL1 = null;
@@ -177,12 +177,9 @@ public class ClienteDAO {
             comandoSQL2 = conexao.prepareStatement(" DELETE FROM endereco WHERE id_cliente = ? ");
             comandoSQL2.setInt(1, Id);
 
-            comandoSQL3 = conexao.prepareStatement("DELETE FROM cliente WHERE id = ?");
-            comandoSQL3.setInt(1, Id);
+            int linhasAfetadas = comandoSQL1.executeUpdate() + comandoSQL2.executeUpdate();
 
-            int linhasAfetadas = comandoSQL1.executeUpdate() + comandoSQL2.executeUpdate() + comandoSQL3.executeUpdate();
-
-            if (linhasAfetadas >= 3) {
+            if (linhasAfetadas >= 2) {
                 retorno = true;
             } else {
                 retorno = false;
@@ -193,10 +190,9 @@ public class ClienteDAO {
             retorno = false;
         } finally {
             try {
-                if (comandoSQL1 != null || comandoSQL2 != null || comandoSQL3 != null) {
+                if (comandoSQL1 != null || comandoSQL2 != null) {
                     comandoSQL1.close();
                     comandoSQL2.close();
-                    comandoSQL3.close();
                 }
 
                 Conexao.fecharConexao();
@@ -207,6 +203,45 @@ public class ClienteDAO {
 
         return retorno;
     }
+    
+    public static boolean excluirDadosContato(int Id) {
+        boolean retorno = false;
+        Connection conexao = null;
+        PreparedStatement comandoSQL1 = null;
+
+        try {
+            conexao = Conexao.abrirConexao();
+
+            comandoSQL1 = conexao.prepareStatement("DELETE FROM cliente WHERE id = ?");
+            comandoSQL1.setInt(1, Id);
+
+            int linhasAfetadas = comandoSQL1.executeUpdate();
+
+            if (linhasAfetadas >= 1) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+            retorno = false;
+        } finally {
+            try {
+                if (comandoSQL1 != null) {
+                    comandoSQL1.close();
+
+                }
+
+                Conexao.fecharConexao();
+
+            } catch (SQLException e) {
+            }
+        }
+
+        return retorno;
+    }
+    
 /**
  * Procura no banco de dados utilizando os parametros antes fornecidos e  mostra na tela o resultado
  * 

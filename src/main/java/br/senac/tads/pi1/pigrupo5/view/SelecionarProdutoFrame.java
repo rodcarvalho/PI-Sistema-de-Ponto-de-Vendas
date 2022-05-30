@@ -82,6 +82,11 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
                 txfCodProdutoActionPerformed(evt);
             }
         });
+        txfCodProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txfCodProdutoKeyTyped(evt);
+            }
+        });
 
         txfQtdProduto.setName("Quantidade"); // NOI18N
         txfQtdProduto.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +203,10 @@ public class SelecionarProdutoFrame extends javax.swing.JFrame {
     private void txfQtdProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfQtdProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfQtdProdutoActionPerformed
+
+    private void txfCodProdutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCodProdutoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfCodProdutoKeyTyped
 
     /**
      * @param args the command line arguments

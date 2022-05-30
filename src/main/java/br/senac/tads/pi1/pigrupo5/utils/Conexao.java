@@ -25,8 +25,8 @@ public class Conexao {
     public static String server = "localhost";
     public static String database = "loja";
 
-    public static String login = "root";
-    public static String senha = "";
+    public static String login;
+    public static String senha;
 
     public static String url;
 

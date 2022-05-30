@@ -184,7 +184,7 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
 
         cbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Solteiro(a)", "Casado(a)", "Divorciado(a)", "Viúvo(a)" }));
 
-        lblNascimento.setText("Data de Nascimento:");
+        lblNascimento.setText(" Nascimento*:");
 
         javax.swing.GroupLayout pnlDadosLayout = new javax.swing.GroupLayout(pnlDados);
         pnlDados.setLayout(pnlDadosLayout);
@@ -201,15 +201,18 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
                     .addGroup(pnlDadosLayout.createSequentialGroup()
                         .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtCPF)
-                            .addComponent(cbSexo, 0, 120, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblNascimento)
-                            .addComponent(lblEstadoCivil))
+                            .addComponent(cbSexo, 0, 131, Short.MAX_VALUE))
+                        .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDadosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNascimento))
+                            .addGroup(pnlDadosLayout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(lblEstadoCivil)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jdcNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbEstadoCivil, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbEstadoCivil, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jdcNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(pnlDadosLayout.createSequentialGroup()
                         .addComponent(txtNome)
@@ -339,11 +342,16 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
             }
         });
 
-        try {
-            txtNumeroEndereco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtNumeroEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumeroEnderecoActionPerformed(evt);
+            }
+        });
+        txtNumeroEndereco.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroEnderecoKeyTyped(evt);
+            }
+        });
 
         try {
             txtCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
@@ -495,8 +503,11 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
         validador.ObrigarCampo(this.txtEmail);
         validador.ObrigarCampo(this.txtDDD);
         validador.ObrigarCampo(this.txtTelefone);
+        validador.ObrigarCampo(this.jdcNascimento);
 
-        if (validador.ObrigarCampo(this.txtNome) && validador.ObrigarCampo(this.txtCPF) && validador.ObrigarCampo(this.txtEmail) && validador.ObrigarCampo(this.txtEmail) && validador.ObrigarCampo(this.txtDDD) && validador.ObrigarCampo(this.txtTelefone)) {
+        if (validador.ObrigarCampo(this.txtNome) && validador.ObrigarCampo(this.txtCPF) && validador.ObrigarCampo(this.txtEmail)
+                && validador.ObrigarCampo(this.txtEmail) && validador.ObrigarCampo(this.txtDDD)
+                && validador.ObrigarCampo(this.txtTelefone) && validador.ObrigarCampo(this.jdcNascimento)) {
 
             //Dados Basicos
             String nome = txtNome.getText().trim(),
@@ -575,6 +586,17 @@ public class CadastroClienteFrame extends javax.swing.JFrame {
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void txtNumeroEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroEnderecoActionPerformed
+
+    }//GEN-LAST:event_txtNumeroEnderecoActionPerformed
+
+    private void txtNumeroEnderecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroEnderecoKeyTyped
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9') || (txtNumeroEndereco.getText() + evt.getKeyChar()).length() > 10)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNumeroEnderecoKeyTyped
 
     /**
      * @param args the command line arguments

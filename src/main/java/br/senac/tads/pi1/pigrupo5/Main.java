@@ -5,7 +5,7 @@
  */
 package br.senac.tads.pi1.pigrupo5;
 
-import br.senac.tads.pi1.pigrupo5.view.PedidoFrame;
+import br.senac.tads.pi1.pigrupo5.view.LoginFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -35,8 +35,8 @@ public class Main {
 //            }
         }
         
-        PedidoFrame telaInicial = new PedidoFrame();
-        telaInicial.setVisible(true);
+        LoginFrame login = new LoginFrame();
+        login.setVisible(true);
     }
 
 }
