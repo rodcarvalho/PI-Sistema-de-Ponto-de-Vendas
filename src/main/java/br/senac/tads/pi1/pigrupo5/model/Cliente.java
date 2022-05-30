@@ -5,6 +5,8 @@
  */
 package br.senac.tads.pi1.pigrupo5.model;
 
+import java.util.Date;
+
 /**
  *
  * @author rodrigocarvalho
@@ -12,9 +14,10 @@ package br.senac.tads.pi1.pigrupo5.model;
 
 public class Cliente {
     private int id;
-    private String nome, cpf, nascimento, sexo, estadoCivil;
+    private String nome, cpf, sexo, estadoCivil;
     private String email, tipoTelefone, ddd, telefone;
     private String logradouro, bairro, complemento, cep, uf, cidade, numEndereco;
+    private Date nascimento;
 
     public Cliente() {
     }
@@ -35,11 +38,11 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public String getNascimento() {
+    public Date getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(String nascimento) {
+    public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
     }
 

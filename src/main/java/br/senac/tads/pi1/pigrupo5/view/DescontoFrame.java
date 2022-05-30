@@ -19,11 +19,12 @@ public class DescontoFrame extends javax.swing.JFrame {
     
     public DescontoFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public DescontoFrame(PedidoFrame f) {
         initComponents();
-        
+        setLocationRelativeTo(null);
         frame = f;
     }
 
@@ -41,7 +42,7 @@ public class DescontoFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         jLabel1.setText("Insira o valor do desconto");

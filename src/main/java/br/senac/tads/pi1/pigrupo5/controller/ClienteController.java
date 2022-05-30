@@ -7,6 +7,7 @@ package br.senac.tads.pi1.pigrupo5.controller;
 
 import br.senac.tads.pi1.pigrupo5.dao.ClienteDAO;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
+import java.util.Date;
 
 /**
  *
@@ -40,7 +41,7 @@ public class ClienteController {
      * @param numEndereco
      * @return 
      */
-    public static boolean salvar(int parametro, int id, String nome, String cpf, String nascimento, String sexo, String estadoCivil,
+    public static boolean salvar(int parametro, int id, String nome, String cpf, Date nascimento, String sexo, String estadoCivil,
             String email, String tipoTelefone, String ddd, String telefone,
             String logradouro, String bairro, String complemento, String cep, String uf, String cidade, String numEndereco) {
 

@@ -23,6 +23,7 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
      */
     public BuscarProdutoFrame() {
         initComponents();
+        setLocationRelativeTo(null);
         DefaultTableModel tabela = (DefaultTableModel) tblProdutos.getModel();
         tblProdutos.setRowSorter(new TableRowSorter(tabela));
         objProduto = new Produto();

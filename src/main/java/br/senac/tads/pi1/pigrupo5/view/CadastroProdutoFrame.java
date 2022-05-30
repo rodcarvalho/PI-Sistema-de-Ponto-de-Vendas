@@ -20,6 +20,7 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
      */
      public CadastroProdutoFrame() {
          initComponents();
+         setLocationRelativeTo(null);
          objProduto = new Produto();
          //btnsalvar.setVisible(true);
          btnAlterar.setVisible(false);
@@ -27,6 +28,7 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
      
      public CadastroProdutoFrame(Produto p) {
         initComponents();
+        setLocationRelativeTo(null);
         this.objProduto = p;
         ////nome, codproduto, qtdEstoque, valor, marca, modelo, cor, descricao
         this.id = p.getId();
