@@ -15,7 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class Main {
 
-   /**  Main.
+   /**  Main do Sistema, tela Inicial.
     * 
     * @param args 
     */
