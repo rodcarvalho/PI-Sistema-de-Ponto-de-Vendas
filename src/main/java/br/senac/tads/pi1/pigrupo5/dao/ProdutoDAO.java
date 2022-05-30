@@ -64,7 +64,11 @@ public class ProdutoDAO {
         }
         
 }
-     
+     /**
+      * Atualizando dados do Produto salvos no Banco com Novas Informaçoes do mesmo.
+      * 
+      * @param p =  produto
+      */
           public void atualizar(Produto p) {
         
         // inicialização da conexão 
@@ -107,6 +111,11 @@ public class ProdutoDAO {
         }
         
 }
+          /**
+           * Excluir PRODUTO, utilizando o ID do mesmo e Salvado a mudança no Banco.
+           * 
+           * @param p = nome dado ao Produto
+           */
         public void Excluir(Produto p) {
         
         // inicialização da conexão 
@@ -143,7 +152,7 @@ public class ProdutoDAO {
      // aparecer dados da Jtable
       
      /**
-      * Mostrando todos os produtos cadastrados com informações no banco
+      * Listando todos os produtos cadastrados com informações no banco
       * 
       * @return 
       */
@@ -189,6 +198,17 @@ public class ProdutoDAO {
          }
            return produtos;
      }
+     
+     /**
+      * Utilizado para fazer a Busca na Listagem anteriormente feita dos Produtos 
+      * no Banco de Dados, Utilizando as Informações antes cadastradas.
+      * 
+      * @param busca = Valor Salvo no Banco que o Usuario irá usar para Busca.
+      * 
+      * @param parametro = Nome do parametro no Qual a Informação do valor está 
+      * 
+      * @return 
+      */
      public List<Produto> ListaBusca(String busca, String parametro){
          
          // inicialização da conexão 
@@ -235,9 +255,9 @@ public class ProdutoDAO {
      }
      
      /**
-      * Buscar Produto, utilizando Informações e ID do mesmo no banco de dados
+      * Buscar Produto no estoque, utilizando Informações e ID do mesmo no banco de dados
       * 
-      * @param idBusca
+      * @param idBusca = buscar produtos por Id, no estoque no Banco de dados
       * @return 
       */
 

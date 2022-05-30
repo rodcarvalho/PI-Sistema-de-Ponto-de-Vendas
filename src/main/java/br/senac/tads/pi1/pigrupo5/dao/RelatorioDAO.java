@@ -22,10 +22,10 @@ public class RelatorioDAO {
 /**
  * Consultando Relatorios com base nos Adicionados nos Bancos de Dados.
  * 
- * @param cbParametro
- * @param txfBusca
- * @param dataInicio
- * @param dataFim
+ * @param cbParametro = nome da Função na qual o valor está
+ * @param txfBusca = valor no qual você vai Procurar o pedido na Lista do Banco
+ * @param dataInicio = data da Criação do Pedido
+ * @param dataFim = data da Entrega do Pedido
  * @return 
  */
     public static ArrayList<Relatorio> consultarRelatorios(String cbParametro, String txfBusca, Date dataInicio, Date dataFim) {

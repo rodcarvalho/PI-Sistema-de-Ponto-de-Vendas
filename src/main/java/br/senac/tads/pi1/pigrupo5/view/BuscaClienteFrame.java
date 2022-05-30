@@ -175,12 +175,18 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
 
     pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * Cadastro do Cliente.
+ * @param evt 
+ */
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         CadastroClienteFrame CadastroCliente = new CadastroClienteFrame();
         CadastroCliente.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
-
+/**
+ * Buscar Cliente
+ * @param evt 
+ */
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
         CarregarJTableCliente(txtParametro.getSelectedItem().toString(), txtBusca.getText());
     }//GEN-LAST:event_btnPesquisaActionPerformed
@@ -188,7 +194,10 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
     private void txtParametroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtParametroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtParametroActionPerformed
-
+/**
+ * Excluir Cliente
+ * @param evt 
+ */
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (tblClientes.getRowCount() > 0) {
             int linha = tblClientes.getSelectedRow();
@@ -210,7 +219,10 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
 
         CarregarJTableCliente("Código", "");
     }//GEN-LAST:event_btnExcluirActionPerformed
-
+/**
+ * Alterar dados do Cliente
+ * @param evt 
+ */
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         if (tblClientes.getRowCount() > 0) {
             int linha = tblClientes.getSelectedRow();
@@ -271,7 +283,10 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
         CarregarJTableCliente("Código", "");
 
     }//GEN-LAST:event_btnAlterarActionPerformed
-
+/**
+ * Buscar por Cliente urilizando Informações no Banco
+ * @param evt 
+ */
     private void txtParametroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txtParametroItemStateChanged
         String parametro = txtParametro.getSelectedItem().toString();
         String texto = txtBusca.getText().trim().replace(".", "").replace("-", "");
@@ -377,7 +392,12 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtBusca;
     private javax.swing.JComboBox<String> txtParametro;
     // End of variables declaration//GEN-END:variables
-
+/**
+ * Buscar Clientes Utilizando dados no Banco.
+ * 
+ * @param parametro = Parametro da Busca "CPF"
+ * @param busca = Valor dentro do parametro para Busca
+ */
     private void CarregarJTableCliente(String parametro, String busca) {
         ArrayList<Cliente> listaClientes = ClienteDAO.consultarClientes(parametro, busca);
 

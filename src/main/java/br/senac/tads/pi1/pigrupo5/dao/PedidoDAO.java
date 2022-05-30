@@ -22,7 +22,12 @@ import java.util.logging.Logger;
  * @author rodrigocarvalho
  */
 public class PedidoDAO {
-    
+    /**  Fazendo o Pedido dos Cliente, Adicionando Produtos no Pedido e salvando no Banco de Dados.
+     * 
+     * @param p = Nome dado a Pedido
+     * @param c = Nome Dado a Cliente
+     * @return 
+     */
     public static int adicionar(Pedido p, Cliente c) {
         SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dataFormatada = formatador.format(p.getData());

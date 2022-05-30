@@ -18,7 +18,8 @@ public class ClienteController {
     // 1 - Atualizar
     // Id = 0 para adicionar
     /**
-     * Cadastrar ou Adicionar Novo Cliente, utilizando os parametros dados abaixo como informações guardadas no banco
+     * Cadastrar ou Adicionar Novo Cliente e Gaurdar ele no Banco, 
+     * utilizando os parametros dados abaixo como informações guardadas no banco.
      * 
      * @param parametro
      * @param id

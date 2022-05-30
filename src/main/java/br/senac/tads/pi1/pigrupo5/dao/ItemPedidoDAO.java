@@ -19,7 +19,13 @@ import java.util.ArrayList;
  * @author rodrigocarvalho
  */
 public class ItemPedidoDAO {
-    
+    /**
+     * Adicionando Produto no Pedido do Cliente e salvando no Banco
+     * 
+     * @param p = Nome dado ao Produto
+     * @param id = Id do Pedido
+     * @return 
+     */
     public static boolean adicionarItens(Produto p, int id) {
         boolean retorno;
         Connection conexao = null;
@@ -58,7 +64,12 @@ public class ItemPedidoDAO {
         }
         return retorno;
     }
-
+/**
+ * Lista dos produtos no Pedido, que foi salvo no Banco.
+ * 
+ * @param id = Id do Pedido
+ * @return 
+ */
     public static ArrayList<ItemPedido> listarItemPedido(int id) {
         ResultSet rs = null;
         Connection conexao = null;

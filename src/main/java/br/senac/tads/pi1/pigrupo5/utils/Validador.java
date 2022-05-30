@@ -21,11 +21,20 @@ import javax.swing.JTextField;
 public class Validador {
 
     public static ArrayList<String> mensagensErro = new ArrayList<>();
-
+/**
+ * Validando a Entrada de Dados e Retornando mensagem de Erro.
+ * 
+ * @return 
+ */
     public static ArrayList<String> getMensagensErro() {
         return mensagensErro;
     }
-
+/**
+ * Validando apenas textos completos
+ * 
+ * @param txt = validar o Campo escrito
+ * @return 
+ */
     public static boolean ValidarInteiro(JTextField txt) {
         try {
             if (txt.getText().equals("")) {
@@ -56,7 +65,12 @@ public class Validador {
             }
         }
     }
-
+/**
+ * Validando Textos com utilização de "," e compostos
+ * 
+ * @param txt = Validando o Campo escrito
+ * @return 
+ */
     public static boolean ValidarDouble(JTextField txt) {
         try {
             if (txt.getText().equals("")) {
@@ -87,7 +101,12 @@ public class Validador {
             }
         }
     }
-
+/**
+ * Validando somente quando houver algo escrito e Mostrar mensagem de Erro
+ * 
+ * @param txt =Validar campo Escrito
+ * @return 
+ */
     public static boolean ObrigarCampo(JTextField txt) {
         boolean retorno;
         int comprimento = (int) txt.getSize().getHeight();

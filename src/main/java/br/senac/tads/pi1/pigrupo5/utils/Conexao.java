@@ -98,7 +98,10 @@ public class Conexao {
         
         return retorno;
     }
-    
+    /**
+     * fechar conexão com o Produto.
+     * @param con = conexão do produto
+     */
     public static void FecharConexaoProduto(Connection con){
         
         
@@ -115,7 +118,12 @@ public class Conexao {
         
         
     }
-    
+    /**
+     * Fechar conexão com o Produto
+     * 
+     * @param con = conexão com o Produto
+     * @param comandoSQL1  = Fazendo a Pesquisa do Produto
+     */
     public static void FecharConexaoProduto(Connection con, PreparedStatement comandoSQL1){
         
             FecharConexaoProduto(con);
@@ -131,7 +139,13 @@ public class Conexao {
                 
             
          }
-    
+    /**
+     * Fechando conexão com o Produto
+     * 
+     * @param con = Conexão com o Produto
+     * @param comandoSQL1 = Fazendo Pesquisa do Produto
+     * @param rs = resultado da Pesquisa do Produto
+     */
     public static void FecharConexaoProduto(Connection con, PreparedStatement comandoSQL1, ResultSet rs){
         
             FecharConexaoProduto(con, comandoSQL1);
