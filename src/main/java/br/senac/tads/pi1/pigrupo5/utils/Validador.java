@@ -16,10 +16,19 @@ import javax.swing.JTextField;
  */
 public class Validador {
     public static ArrayList<String> mensagensErro = new ArrayList<>();
-    
+    /**
+     * validando mesagens de erro
+     * @return 
+     */
     public static ArrayList<String> getMensagensErro() {
         return mensagensErro;
     }
+    /**
+     * validando Textos, e mostrando mensagens de erro.
+     * 
+     * @param txt = escrito pelo ususario 
+     * @return 
+     */
     public static boolean ValidarInteiro(JTextField txt) {
         try {
             if (txt.getText().equals("")){
@@ -31,6 +40,37 @@ public class Validador {
             return true;
         } catch (NumberFormatException e) {
             mensagensErro.add("Falha ao converter o valor do campo " + txt.getName() + " em inteiro");
+            txt.setBackground(Color.red);
+            txt.setText("");
+            return false;
+        } catch (IllegalArgumentException e) {
+            mensagensErro.add("Digite um valor para o campo " + txt.getName());
+            txt.setBackground(Color.red);
+            txt.setText("");
+            return false;
+        } catch (Exception e) {
+            mensagensErro.add(e.getMessage());
+            txt.setText("");
+            return false;
+        }
+        finally {
+            if (!mensagensErro.isEmpty()){
+               JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
+               mensagensErro.clear();
+            }
+        }
+    }
+    public static boolean ValidarDouble(JTextField txt) {
+        try {
+            if (txt.getText().equals("")){
+                throw new  IllegalArgumentException();
+            }
+            
+            double valorConvertido = Double.parseDouble(txt.getText());
+            txt.setBackground(Color.white);
+            return true;
+        } catch (NumberFormatException e) {
+            mensagensErro.add("Falha ao converter o valor do campo " + txt.getName() + " em double");
             txt.setBackground(Color.red);
             txt.setText("");
             return false;

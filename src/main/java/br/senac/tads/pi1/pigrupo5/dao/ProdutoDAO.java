@@ -18,7 +18,11 @@ import javax.swing.JOptionPane;
  * @author wellington
  */
 public class ProdutoDAO {
-    
+    /**
+     * Adicionando Produto no banco de dados com informações relevantes
+     * 
+     * @param p = produto
+     */
      public void adicionar(Produto p) {
         
         // inicialização da conexão 
@@ -137,7 +141,12 @@ public class ProdutoDAO {
         
 }
      // aparecer dados da Jtable
-          
+      
+     /**
+      * Mostrando todos os produtos cadastrados com informações no banco
+      * 
+      * @return 
+      */
      public List<Produto> ListaProduto(){
          
          // inicialização da conexão 
@@ -225,6 +234,13 @@ public class ProdutoDAO {
            return produtos;
      }
      
+     /**
+      * Buscar Produto, utilizando Informações e ID do mesmo no banco de dados
+      * 
+      * @param idBusca
+      * @return 
+      */
+
     public static ArrayList<Produto> buscaProduto(int idBusca) {
         ResultSet rs = null;
         Connection conexao = null;
@@ -271,7 +287,13 @@ public class ProdutoDAO {
         }
         return listaProdutos;
     }
-    
+    /**
+     * Retira a Quantidade da Informação, qtd'Estoque', de quantos produtos existem em estoque
+     * 
+     * @param idProd = produção
+     * @param qtd =quantidade
+     * @return 
+     */
     public static boolean decrementaQtd(int idProd, int qtd) {
         Connection conexao = null;
         PreparedStatement comandoSQL = null;

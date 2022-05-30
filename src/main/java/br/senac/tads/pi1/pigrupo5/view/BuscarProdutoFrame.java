@@ -102,7 +102,7 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblBusca.setText("Busca por:");
 
@@ -116,6 +116,11 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
         txtBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscaActionPerformed(evt);
+            }
+        });
+        txtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscaKeyTyped(evt);
             }
         });
 
@@ -297,10 +302,6 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
             cadastroproduto.setVisible(true);
             btnAlterar.setVisible(true);
 
-           
-           
-            
-
             
            } else {
             JOptionPane.showMessageDialog(this, "Selecione um produto da tabela!");
@@ -323,6 +324,31 @@ public class BuscarProdutoFrame extends javax.swing.JFrame {
 
        
     }//GEN-LAST:event_tblProdutosKeyReleased
+
+    private void txtBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyTyped
+        
+        // limitar o numero de entrada de dados
+        if(txtBusca.getText().length()>=50){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 50 caracteres atingido!");
+        }
+        // para nome permite a entrada de 
+        if (txtParamentro.getSelectedItem().toString().equals("Código Produto")){
+        char c = evt.getKeyChar();
+        if ((c < '0') || (c > '9')){
+        evt.consume();
+        //JOptionPane.showMessageDialog(null,"Somente números","Entrada de dados",JOptionPane.WARNING_MESSAGE);
+        }}
+        if (txtParamentro.getSelectedItem().toString().equals("Nome")){
+        char c = evt.getKeyChar();
+        if ((c < 'a') || (c > 'z')){
+        evt.consume();
+        //JOptionPane.showMessageDialog(null,"Somente números","Entrada de dados",JOptionPane.WARNING_MESSAGE);
+        }}
+        
+
+    }//GEN-LAST:event_txtBuscaKeyTyped
 
     /**
      * @param args the command line arguments

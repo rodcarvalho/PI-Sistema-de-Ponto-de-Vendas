@@ -4,6 +4,8 @@ package br.senac.tads.pi1.pigrupo5.view;
 
 import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
+import br.senac.tads.pi1.pigrupo5.utils.Validador;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +21,7 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
      public CadastroProdutoFrame() {
          initComponents();
          objProduto = new Produto();
-         btnsalvar.setVisible(true);
+         //btnsalvar.setVisible(true);
          btnAlterar.setVisible(false);
      }
      
@@ -73,11 +75,58 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
         btnsalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de produtos"));
 
         txtnome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtnomeActionPerformed(evt);
+            }
+        });
+        txtnome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnomeKeyTyped(evt);
+            }
+        });
+
+        txtcodproduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtcodprodutoKeyTyped(evt);
+            }
+        });
+
+        txtqtdeestoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtqtdeestoqueActionPerformed(evt);
+            }
+        });
+        txtqtdeestoque.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtqtdeestoqueKeyTyped(evt);
+            }
+        });
+
+        txtmarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtmarcaKeyTyped(evt);
+            }
+        });
+
+        txtmodelo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtmodeloKeyTyped(evt);
+            }
+        });
+
+        txtvalor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtvalorActionPerformed(evt);
+            }
+        });
+        txtvalor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtvalorKeyTyped(evt);
             }
         });
 
@@ -86,10 +135,20 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
                 txtcorActionPerformed(evt);
             }
         });
+        txtcor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtcorKeyTyped(evt);
+            }
+        });
 
         txtdescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtdescricaoActionPerformed(evt);
+            }
+        });
+        txtdescricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtdescricaoKeyTyped(evt);
             }
         });
 
@@ -218,7 +277,7 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnsalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 33, Short.MAX_VALUE))
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         pack();
@@ -305,6 +364,129 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
     private void txtdescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdescricaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtdescricaoActionPerformed
+
+    private void txtnomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnomeKeyTyped
+        // TODO add your handling code here:
+        // Limitação de 50 caracteres para a marca
+        if(txtnome.getText().length()>=50){
+        evt.consume();
+        JOptionPane.showMessageDialog(this,"Máximo de 50 caracteres atingido!");
+        }
+    }//GEN-LAST:event_txtnomeKeyTyped
+
+    private void txtqtdeestoqueKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtqtdeestoqueKeyTyped
+        
+        // validação entrada de dados permitindo somente inteiros
+//        Validador validar = new Validador();
+//        Validador.ValidarInteiro(txtqtdeestoque);
+        char c = evt.getKeyChar();
+        if ((c < '0') || (c > '9')){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(null,"Somente números","Entrada de dados",JOptionPane.WARNING_MESSAGE);
+        }
+        // limitar o numero de entrada de dados
+        if(txtqtdeestoque.getText().length()>=5){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 5 caracteres atingido!");
+        }
+        
+        
+    }//GEN-LAST:event_txtqtdeestoqueKeyTyped
+
+    private void txtmarcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmarcaKeyTyped
+        // TODO add your handling code here:
+        
+        // limitar o numero de entrada de dados
+        if(txtmarca.getText().length()>=50){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 50 caracteres atingido!");
+        }
+    }//GEN-LAST:event_txtmarcaKeyTyped
+
+    private void txtcorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcorKeyTyped
+        // 
+        char c = evt.getKeyChar();
+        if ((c < 'a') || (c > 'z')){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(null,"Somente números","Entrada de dados",JOptionPane.WARNING_MESSAGE);
+        }
+        // limitar o numero de entrada de dados
+        if(txtcodproduto.getText().length()>=20){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 20 caracteres atingido!");
+        }
+        
+    }//GEN-LAST:event_txtcorKeyTyped
+
+    private void txtcodprodutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodprodutoKeyTyped
+        // TODO add your handling code here:
+        
+        char c = evt.getKeyChar();
+        if ((c < '0') || (c > '9')){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(null,"Somente números","Entrada de dados",JOptionPane.WARNING_MESSAGE);
+        }
+        // limitar o numero de entrada de dados
+        if(txtcodproduto.getText().length()>=20){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 20 caracteres atingido!");
+        }
+    }//GEN-LAST:event_txtcodprodutoKeyTyped
+
+    private void txtmodeloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmodeloKeyTyped
+        // TODO add your handling code here:
+        // limitar o numero de entrada de dados
+        if(txtmodelo.getText().length()>=10){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 10 caracteres atingido!");
+        }
+        
+    }//GEN-LAST:event_txtmodeloKeyTyped
+
+    private void txtdescricaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdescricaoKeyTyped
+        // TODO add your handling code here:
+        if(txtdescricao.getText().length()>=100){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 100 caracteres atingido!");
+        }
+        
+    }//GEN-LAST:event_txtdescricaoKeyTyped
+
+    private void txtvalorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtvalorKeyTyped
+        // TODO add your handling code here:
+        
+        char c = evt.getKeyChar();
+        if ((c != '0') && (c != '1') && (c != '2')&& (c != '3') && (c != '4') && (c != '5') && (c != '6') && (c != '7') && (c != '8') && (c != '9') && (c != '.') && (c != ',')  ){
+        evt.consume();
+        //JOptionPane.showMessageDialog(null,"Somente números","Entrada de dados",JOptionPane.WARNING_MESSAGE);
+        }
+        
+              // limitar o numero de entrada de dados
+        if(txtvalor.getText().length()>=8){
+        evt.consume();
+        //tire o comentário abaixo para mostrar o aviso
+        //JOptionPane.showMessageDialog(this,"Máximo de 8 caracteres atingido!");
+        }
+        
+        
+    }//GEN-LAST:event_txtvalorKeyTyped
+
+    private void txtvalorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtvalorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtvalorActionPerformed
+
+    private void txtqtdeestoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtqtdeestoqueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtqtdeestoqueActionPerformed
 
     /**
      * @param args the command line arguments
