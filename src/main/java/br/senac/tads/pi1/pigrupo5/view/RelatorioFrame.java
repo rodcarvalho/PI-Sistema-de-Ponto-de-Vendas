@@ -5,38 +5,71 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.dao.ItemPedidoDAO;
+import br.senac.tads.pi1.pigrupo5.model.ItemPedido;
 import br.senac.tads.pi1.pigrupo5.model.Relatorio;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author bispo
  */
 public class RelatorioFrame extends javax.swing.JFrame {
+
     private int id;
     Relatorio objRelatorio;
+
     /**
      * Creates new form EspecificoCliente
      */
     public RelatorioFrame() {
         initComponents();
     }
-    
+
     public RelatorioFrame(Relatorio r) {
         initComponents();
         this.objRelatorio = r;
-        
+
         this.id = r.getId();
         this.txtCodCliente.setText(Integer.toString(r.getIdCliente()));
         this.txtCliente.setText(r.getNomeCliente());
         this.txtCpf.setText(r.getCpf());
         this.txtDataPedido.setText(r.getDataRelatorio());
         this.txtValorTotal.setText("R$ " + r.getTotal());
-    }
-    
-    public void CarregarJTableItemRelatorio(int id){
         
+        CarregarJTableItemRelatorio(id);
     }
- 
+
+    public void CarregarJTableItemRelatorio(int id) {
+        ArrayList<ItemPedido> listaItemPedido = ItemPedidoDAO.listarItemPedido(id);
+        DefaultTableModel tmItemPedido = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        tmItemPedido.addColumn("Cód. Produto");
+        tmItemPedido.addColumn("Nome");
+        tmItemPedido.addColumn("Quantidade");
+        tmItemPedido.addColumn("Valor Unitário");
+        tmItemPedido.addColumn("Valor Total");
+        
+        tblItemPedido.setModel(tmItemPedido);
+        tmItemPedido.setRowCount(0);
+        
+        for (ItemPedido i : listaItemPedido) {
+            tmItemPedido.addRow(new Object[]{i.getIdProduto(), i.getNome(), i.getQtd(),"R$ " + i.getValorUnit(),"R$" +  Math.round((i.getQtd() * i.getValorUnit())  * 100)/ 100.00});
+        }
+        
+        tblItemPedido.getColumnModel().getColumn(0).setPreferredWidth(50); // ID Produto
+        tblItemPedido.getColumnModel().getColumn(1).setPreferredWidth(50); // Nome
+        tblItemPedido.getColumnModel().getColumn(2).setPreferredWidth(70); // Quantidade
+        tblItemPedido.getColumnModel().getColumn(3).setPreferredWidth(70); // Valor Unitario
+        tblItemPedido.getColumnModel().getColumn(4).setPreferredWidth(50); // Valor Total
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,7 +84,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblItemRelatorio = new javax.swing.JTable();
+        tblItemPedido = new javax.swing.JTable();
         txtCliente = new javax.swing.JTextField();
         txtCodCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -70,7 +103,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Cód. Cliente:");
 
-        tblItemRelatorio.setModel(new javax.swing.table.DefaultTableModel(
+        tblItemPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -86,7 +119,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblItemRelatorio);
+        jScrollPane1.setViewportView(tblItemPedido);
 
         txtCliente.setEditable(false);
 
@@ -253,7 +286,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblItemRelatorio;
+    private javax.swing.JTable tblItemPedido;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtCodCliente;
     private javax.swing.JTextField txtCpf;
