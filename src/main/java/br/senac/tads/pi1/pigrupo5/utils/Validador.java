@@ -6,7 +6,9 @@
 package br.senac.tads.pi1.pigrupo5.utils;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -14,27 +16,22 @@ import javax.swing.JTextField;
  *
  * @author rodrigocarvalho
  */
+
+
 public class Validador {
+
     public static ArrayList<String> mensagensErro = new ArrayList<>();
-    /**
-     * validando mesagens de erro
-     * @return 
-     */
+
     public static ArrayList<String> getMensagensErro() {
         return mensagensErro;
     }
-    /**
-     * validando Textos, e mostrando mensagens de erro.
-     * 
-     * @param txt = escrito pelo ususario 
-     * @return 
-     */
+
     public static boolean ValidarInteiro(JTextField txt) {
         try {
-            if (txt.getText().equals("")){
-                throw new  IllegalArgumentException();
+            if (txt.getText().equals("")) {
+                throw new IllegalArgumentException();
             }
-            
+
             int valorConvertido = Integer.parseInt(txt.getText());
             txt.setBackground(Color.white);
             return true;
@@ -52,20 +49,20 @@ public class Validador {
             mensagensErro.add(e.getMessage());
             txt.setText("");
             return false;
-        }
-        finally {
-            if (!mensagensErro.isEmpty()){
-               JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
-               mensagensErro.clear();
+        } finally {
+            if (!mensagensErro.isEmpty()) {
+                JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
+                mensagensErro.clear();
             }
         }
     }
+
     public static boolean ValidarDouble(JTextField txt) {
         try {
-            if (txt.getText().equals("")){
-                throw new  IllegalArgumentException();
+            if (txt.getText().equals("")) {
+                throw new IllegalArgumentException();
             }
-            
+
             double valorConvertido = Double.parseDouble(txt.getText());
             txt.setBackground(Color.white);
             return true;
@@ -83,12 +80,28 @@ public class Validador {
             mensagensErro.add(e.getMessage());
             txt.setText("");
             return false;
-        }
-        finally {
-            if (!mensagensErro.isEmpty()){
-               JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
-               mensagensErro.clear();
+        } finally {
+            if (!mensagensErro.isEmpty()) {
+                JOptionPane.showMessageDialog(txt, Validador.getMensagensErro());
+                mensagensErro.clear();
             }
         }
     }
+
+    public static boolean ObrigarCampo(JTextField txt) {
+        boolean retorno;
+        int comprimento = (int) txt.getSize().getHeight();
+        if (txt.getText().replace("-", "").replace(".", "").trim().equals("")) {
+            txt.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            retorno = false;
+        } else {
+            txt.setBorder(new JTextField().getBorder());
+
+            retorno = true;
+        }
+
+        txt.setPreferredSize(new Dimension(22, comprimento));
+        return retorno;
+    }
+
 }

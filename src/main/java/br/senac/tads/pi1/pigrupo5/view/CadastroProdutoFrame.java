@@ -77,7 +77,10 @@ public class CadastroProdutoFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de produtos"));
+
+
 
         txtnome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

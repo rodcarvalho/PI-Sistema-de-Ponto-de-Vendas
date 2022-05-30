@@ -14,6 +14,7 @@ public class ItemPedido {
     int idProduto;
     int qtd;
     double valorUnit;
+    String nome;
     
     public ItemPedido() {
     }
@@ -49,6 +50,15 @@ public class ItemPedido {
     public void setValorUnit(double valorUnit) {
         this.valorUnit = valorUnit;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     
     
 }

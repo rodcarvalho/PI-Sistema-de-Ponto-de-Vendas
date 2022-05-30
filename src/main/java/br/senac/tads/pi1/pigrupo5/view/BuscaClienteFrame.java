@@ -123,6 +123,11 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
             txtBuscaActionPerformed(evt);
         }
     });
+    txtBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            txtBuscaKeyTyped(evt);
+        }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -313,6 +318,12 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
     private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscaActionPerformed
+
+    private void txtBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaKeyTyped
+        if ((txtBusca.getText() + evt.getKeyChar()).length() > 50) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtBuscaKeyTyped
 
     /**
      * @param args the command line arguments

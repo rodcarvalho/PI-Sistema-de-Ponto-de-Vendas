@@ -5,7 +5,11 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.dao.ItemPedidoDAO;
+import br.senac.tads.pi1.pigrupo5.dao.PedidoDAO;
+import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
+import br.senac.tads.pi1.pigrupo5.model.Pedido;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -22,10 +26,9 @@ public class PedidoFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     
-    public Cliente c;
+    public Cliente cliente = null;
     public ArrayList<Produto> itensLista = new ArrayList<Produto>();
-    double total = 0.0;
-    double desconto = 0.0;
+    public Pedido pedido = new Pedido();
     double subtotal = 0.0;
     
     public PedidoFrame() {
@@ -281,6 +284,11 @@ public class PedidoFrame extends javax.swing.JFrame {
         });
 
         btnFinishOrder.setText("Finalizar Pedido");
+        btnFinishOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinishOrderActionPerformed(evt);
+            }
+        });
 
         pnlItensButtons.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 51, 255), 4, true));
         pnlItensButtons.setForeground(new java.awt.Color(255, 255, 255));
@@ -523,15 +531,16 @@ public class PedidoFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public void preencheInfoCliente(Cliente c) { 
-        this.lblNome.setText("Nome: " + c.getNome());
-        this.lblCPF.setText("CPF: " + c.getCpf());
-        this.lblDataNascimento.setText("Data de Nascimento: " + c.getNascimento());
-        this.lblLogradouro.setText("Logradouro: " + c.getLogradouro() + ", " + c.getNumEndereco());
-        this.lblCidade.setText("Cidade: " + c.getCidade());
-        this.lblCEP.setText("CEP: " + c.getCep());
-        this.lblEmail.setText("E-mail: " + c.getEmail());
-        this.lblTelefone.setText("Telefone: (" + c.getDdd() + ")" + c.getTelefone());
+    public void preencheInfoCliente(Cliente c) {
+        cliente = c;
+        this.lblNome.setText("Nome: " + cliente.getNome());
+        this.lblCPF.setText("CPF: " + cliente.getCpf());
+        this.lblDataNascimento.setText("Data de Nascimento: " + cliente.getNascimento());
+        this.lblLogradouro.setText("Logradouro: " + cliente.getLogradouro() + ", " + cliente.getNumEndereco());
+        this.lblCidade.setText("Cidade: " + cliente.getCidade());
+        this.lblCEP.setText("CEP: " + cliente.getCep());
+        this.lblEmail.setText("E-mail: " + cliente.getEmail());
+        this.lblTelefone.setText("Telefone: (" + cliente.getDdd() + ")" + cliente.getTelefone());
     }
     
     public void calculaSubtotal() {
@@ -548,20 +557,20 @@ public class PedidoFrame extends javax.swing.JFrame {
     }
     
     public void inserirDesconto(double desc) {
-        desconto = desc;
+        pedido.setDesconto(desc);
         
-        if (desconto > 0) {
-            this.lblDiscountValue.setText(Double.toString(desconto));
+        if (pedido.getDesconto() > 0) {
+            this.lblDiscountValue.setText(Double.toString(pedido.getDesconto()));
         }
         
-        atualizaTable();
+        calculaTotal();
     }
     
     public void calculaTotal() {
         calculaSubtotal();
-        total = subtotal - desconto;
+        pedido.setTotal(subtotal - pedido.getDesconto());
         
-        this.lblTotalValue.setText(Double.toString(total));
+        this.lblTotalValue.setText(Double.toString(pedido.getTotal()));
     }
     
     public void alteraNaLista(Produto p,int index) {
@@ -687,11 +696,69 @@ public class PedidoFrame extends javax.swing.JFrame {
         }
         atualizaTable();
     }//GEN-LAST:event_btnEditItemActionPerformed
-
+    
+    private void limpaTela() {
+        cliente = null;
+        itensLista = new ArrayList<Produto>();
+        pedido = new Pedido();
+        subtotal = 0.0;
+        
+        this.lblDiscountValue.setText("0.0");
+        limpaInfoCliente();
+        atualizaTable();
+    }    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DescontoFrame descontoFrame = new DescontoFrame(this);
         descontoFrame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private boolean verificaCliente() {
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(this, "Insira um cliente para finalizar o pedido");
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    private boolean verificaLista() {
+        if (itensLista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Insira itens no pedido");
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    private void limpaInfoCliente() {
+        this.lblNome.setText("Nome: ");
+        this.lblCPF.setText("CPF: ");
+        this.lblDataNascimento.setText("Data de Nascimento: ");
+        this.lblLogradouro.setText("Logradouro: ");
+        this.lblCidade.setText("Cidade: ");
+        this.lblCEP.setText("CEP: ");
+        this.lblEmail.setText("E-mail: ");
+        this.lblTelefone.setText("Telefone: ");
+    }
+    
+    private void btnFinishOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishOrderActionPerformed
+        boolean clienteValido = verificaCliente();
+        boolean itensValidos = verificaLista();
+        if (clienteValido && itensValidos) {
+            pedido.setId(PedidoDAO.adicionar(pedido, cliente));
+            
+            for (Produto p: itensLista) {
+                ItemPedidoDAO.adicionarItens(p, pedido.getId());
+                ArrayList<Produto> prod = ProdutoDAO.buscaProduto(p.getId());
+                Produto prodEstoque = prod.get(0);
+                
+                int qtd = prodEstoque.getQtdEstoque() - p.getQtdEstoque();
+                ProdutoDAO.decrementaQtd(p.getId(), qtd);
+            }
+            limpaTela();
+        }
+    }//GEN-LAST:event_btnFinishOrderActionPerformed
 
     /**
      * @param args the command line arguments

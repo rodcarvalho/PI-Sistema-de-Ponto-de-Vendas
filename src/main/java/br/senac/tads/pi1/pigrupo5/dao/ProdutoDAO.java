@@ -290,11 +290,11 @@ public class ProdutoDAO {
     /**
      * Retira a Quantidade da Informação, qtd'Estoque', de quantos produtos existem em estoque
      * 
-     * @param idProd = produção
-     * @param qtd =quantidade
+     * @param id = produto
+     * @param qtd = quantidade
      * @return 
      */
-    public static boolean decrementaQtd(int idProd, int qtd) {
+    public static boolean decrementaQtd(int id, int qtd) {
         Connection conexao = null;
         PreparedStatement comandoSQL = null;
         boolean retorno = false;
@@ -302,12 +302,14 @@ public class ProdutoDAO {
         try {
             conexao = Conexao.abrirConexao();
             comandoSQL = conexao.prepareStatement("UPDATE produto SET qtdEstoque = ? WHERE id = ?");
+                 
+                
             comandoSQL.setInt(1, qtd);
-            comandoSQL.setInt(2, idProd);
+            comandoSQL.setInt(2, id);
             
             int linhasAfetadas =  comandoSQL.executeUpdate();
             
-            if (linhasAfetadas >= 1) {
+            if (linhasAfetadas > 0) {
                 retorno = true;
             }
         } catch(ClassNotFoundException | SQLException e) {
