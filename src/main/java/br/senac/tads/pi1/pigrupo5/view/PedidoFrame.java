@@ -756,6 +756,7 @@ public class PedidoFrame extends javax.swing.JFrame {
                 int qtd = prodEstoque.getQtdEstoque() - p.getQtdEstoque();
                 ProdutoDAO.decrementaQtd(p.getId(), qtd);
             }
+            JOptionPane.showMessageDialog(this, "PEDIDO REALIZADO COM SUCESSO");
             limpaTela();
         }
     }//GEN-LAST:event_btnFinishOrderActionPerformed
