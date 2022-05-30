@@ -10,8 +10,12 @@ import br.senac.tads.pi1.pigrupo5.model.Pedido;
 import br.senac.tads.pi1.pigrupo5.utils.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,18 +23,18 @@ import java.text.SimpleDateFormat;
  */
 public class PedidoDAO {
     
-    public static boolean adicionar(Pedido p, Cliente c){
+    public static int adicionar(Pedido p, Cliente c) {
         SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dataFormatada = formatador.format(p.getData());
-        boolean retorno;
+        int id = -1;
         Connection conexao = null;
-        
+        ResultSet rs = null;
         PreparedStatement comandoSQL = null;
         
         try {
             conexao = Conexao.abrirConexao();
             
-            comandoSQL = conexao.prepareStatement("INSERT INTO pedido (dataP, valorDesconto, total, id_cliente) VALUES (?, ?, ?, ?)");
+            comandoSQL = conexao.prepareStatement("INSERT INTO pedido (dataP, valorDesconto, total, id_cliente) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             
             comandoSQL.setString(1, dataFormatada);
             comandoSQL.setDouble(2, p.getDesconto());
@@ -38,15 +42,14 @@ public class PedidoDAO {
             comandoSQL.setInt(4, c.getId());
             
             int linhasAfetadas = comandoSQL.executeUpdate();
+            rs = comandoSQL.getGeneratedKeys();
             
-            if (linhasAfetadas == 1) {
-                retorno = true;
-            } else {
-                retorno = false;
+            if (rs.next()){
+                id = rs.getInt(1);
             }
         } catch(ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
-            retorno = false;
+            id = -1;
         } finally {
             try {
                 if (comandoSQL != null) {
@@ -57,6 +60,6 @@ public class PedidoDAO {
                 
             }
         }
-        return retorno;
+        return id;
     }
 }

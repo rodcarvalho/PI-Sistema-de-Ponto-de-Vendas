@@ -5,7 +5,9 @@
  */
 package br.senac.tads.pi1.pigrupo5.view;
 
+import br.senac.tads.pi1.pigrupo5.dao.ItemPedidoDAO;
 import br.senac.tads.pi1.pigrupo5.dao.PedidoDAO;
+import br.senac.tads.pi1.pigrupo5.dao.ProdutoDAO;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
 import br.senac.tads.pi1.pigrupo5.model.Pedido;
 import br.senac.tads.pi1.pigrupo5.model.Produto;
@@ -561,7 +563,7 @@ public class PedidoFrame extends javax.swing.JFrame {
             this.lblDiscountValue.setText(Double.toString(pedido.getDesconto()));
         }
         
-        atualizaTable();
+        calculaTotal();
     }
     
     public void calculaTotal() {
@@ -694,7 +696,18 @@ public class PedidoFrame extends javax.swing.JFrame {
         }
         atualizaTable();
     }//GEN-LAST:event_btnEditItemActionPerformed
-
+    
+    private void limpaTela() {
+        cliente = null;
+        itensLista = new ArrayList<Produto>();
+        pedido = new Pedido();
+        subtotal = 0.0;
+        
+        this.lblDiscountValue.setText("0.0");
+        limpaInfoCliente();
+        atualizaTable();
+    }    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DescontoFrame descontoFrame = new DescontoFrame(this);
         descontoFrame.setVisible(true);
@@ -718,15 +731,32 @@ public class PedidoFrame extends javax.swing.JFrame {
         }
     }
     
+    private void limpaInfoCliente() {
+        this.lblNome.setText("Nome: ");
+        this.lblCPF.setText("CPF: ");
+        this.lblDataNascimento.setText("Data de Nascimento: ");
+        this.lblLogradouro.setText("Logradouro: ");
+        this.lblCidade.setText("Cidade: ");
+        this.lblCEP.setText("CEP: ");
+        this.lblEmail.setText("E-mail: ");
+        this.lblTelefone.setText("Telefone: ");
+    }
+    
     private void btnFinishOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinishOrderActionPerformed
         boolean clienteValido = verificaCliente();
         boolean itensValidos = verificaLista();
-        
         if (clienteValido && itensValidos) {
-            boolean pedidoDone = PedidoDAO.adicionar(pedido, cliente);
-            if (pedidoDone) {
-                System.out.println("AEE POHA!!");
+            pedido.setId(PedidoDAO.adicionar(pedido, cliente));
+            
+            for (Produto p: itensLista) {
+                ItemPedidoDAO.adicionarItens(p, pedido.getId());
+                ArrayList<Produto> prod = ProdutoDAO.buscaProduto(p.getId());
+                Produto prodEstoque = prod.get(0);
+                
+                int qtd = prodEstoque.getQtdEstoque() - p.getQtdEstoque();
+                ProdutoDAO.decrementaQtd(p.getId(), qtd);
             }
+            limpaTela();
         }
     }//GEN-LAST:event_btnFinishOrderActionPerformed
 
