@@ -46,7 +46,8 @@ public class RelatorioDAO {
                 break;
             case "Cod. Cliente":
                 cbParametro = "cliente.id";
-
+            case "CPF":
+                cbParametro = "cliente.cpf";
             default:
                 cbParametro = cbParametro.toLowerCase();
                 break;
@@ -55,12 +56,15 @@ public class RelatorioDAO {
         try {
 
             conexao = Conexao.abrirConexao();
-            comandoSQL = conexao.prepareStatement("SELECT pedido.id, pedido.id_cliente, cliente.nome, cliente.cpf, pedido.total, pedido.valorDesconto, pedido.dataP FROM pedido INNER JOIN cliente ON pedido.id_cliente = cliente.id WHERE " + cbParametro + " LIKE ? AND pedido.dataP between ? and ?");
-
+            comandoSQL = conexao.prepareStatement("SELECT pedido.id, pedido.id_cliente, cliente.nome, cliente.cpf, pedido.total, pedido.valorDesconto, pedido.dataP FROM pedido INNER JOIN cliente ON pedido.id_cliente = cliente.id WHERE " + cbParametro + " LIKE ? AND dataP between ? and ?");
+            
+            String dataI = (new java.sql.Date(dataInicio.getTime())).toString() + " 00:00:00";
+            String dataF = (new java.sql.Date(dataFim.getTime())).toString() + " 23:59:59";
+            
             comandoSQL.setString(1, '%' + txfBusca + '%');
-            comandoSQL.setDate(2, new java.sql.Date(dataInicio.getTime()));
-            comandoSQL.setDate(3, new java.sql.Date(dataFim.getTime()));
-
+            comandoSQL.setString(2, dataI);
+            comandoSQL.setString(3, dataF);
+            
             rs = comandoSQL.executeQuery();
 
             while (rs.next()) {

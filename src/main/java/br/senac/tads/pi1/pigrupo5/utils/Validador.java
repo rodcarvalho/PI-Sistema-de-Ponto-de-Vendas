@@ -5,9 +5,11 @@
  */
 package br.senac.tads.pi1.pigrupo5.utils;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -101,10 +103,42 @@ public class Validador {
             }
         }
     }
+
+    
+    /**
+     * Compara a Data de Inicio e Fim, para garantir que a De inicio não é 
+     * maior que a Final.
+     * 
+     * @param dcInicio= data de Inicio
+     * @param dcFim= data de Finalização
+     * @return 
+     */
+    public static boolean CompararData(JDateChooser dcInicio, JDateChooser dcFim ) {
+        Date dataInicio = dcInicio.getDate();
+        Date dataFim = dcFim.getDate();
+        
+        if(dataFim == null)
+            dataFim = new Date();
+        
+        if(dataInicio == null)
+            dataInicio = new Date(100,0,0,0,0);
+        
+        if (dataInicio.before(dataFim)) {
+            dcInicio.setBorder(new JDateChooser().getBorder());
+            dcFim.setBorder(new JDateChooser().getBorder());
+            return true;
+        } else {
+            dcInicio.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            dcFim.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            return false;
+        }
+        
+    }
+    
 /**
  * Validando somente quando houver algo escrito e Mostrar mensagem de Erro
  * 
- * @param txt =Validar campo Escrito
+ * @param txt = campo de Escrita
  * @return 
  */
     public static boolean ObrigarCampo(JTextField txt) {
@@ -120,6 +154,28 @@ public class Validador {
         }
 
         txt.setPreferredSize(new Dimension(22, comprimento));
+        return retorno;
+    }
+    /**
+     * Validar somente quando Houver data escrita se não mostrar Mensagem de Erro
+     * 
+     * @param data = Campo de Escrita de Data
+     * @return 
+     */
+    public static boolean ObrigarCampo(JDateChooser data) {
+        boolean retorno;
+        int altura = (int) data.getSize().getHeight();
+        Date data1 = data.getDate();
+        
+        if (data1 == null || data1.after(new Date())) {
+            data.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+            retorno = false;
+        } else {
+            data.setBorder(new JDateChooser().getBorder());
+            retorno = true;
+        }
+
+        data.setPreferredSize(new Dimension(22, altura));
         return retorno;
     }
 

@@ -24,12 +24,13 @@ public class SelecionarClienteFrame extends javax.swing.JFrame {
     
     
     public SelecionarClienteFrame() {
-        initComponents();   
+        initComponents();  
+        setLocationRelativeTo(null);
     }
     
     public SelecionarClienteFrame(PedidoFrame f) {
         initComponents();
-        
+        setLocationRelativeTo(null);
         frame = f;
         setLocationRelativeTo(null);
         objCliente = new Cliente();

@@ -11,10 +11,18 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mnuProduto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Produtos"/>
+                <Property name="text" type="java.lang.String" value="Buscar Produto"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuProdutoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="mnuCadastroProduto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Adicionar Produto"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuCadastroProdutoActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

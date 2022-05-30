@@ -8,7 +8,9 @@ package br.senac.tads.pi1.pigrupo5.view;
 import br.senac.tads.pi1.pigrupo5.model.Cliente;
 import br.senac.tads.pi1.pigrupo5.dao.ClienteDAO;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -201,20 +203,24 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (tblClientes.getRowCount() > 0) {
             int linha = tblClientes.getSelectedRow();
-            
+
             if (linha >= 0) {
                 int Id = Integer.parseInt(tblClientes.getModel().getValueAt(linha, 0).toString());
 
-                if (ClienteDAO.excluir(Id)) {
-                    JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso.");
+                if (ClienteDAO.excluirContatoEndereco(Id)) {
+                    if(ClienteDAO.excluirDadosContato(Id)){
+                        JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso.");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Cliente vinculado a um pedido, foi armazenado os dados basicos.");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(this, "Falha ao excluir cliente.");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Selecione um cliente.");
+                JOptionPane.showMessageDialog(this, "Selecione um cliente da tabela!");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Não existem clientes cadastrados");
+            JOptionPane.showMessageDialog(this, "Não existem clientes cadastrados neste parametro!");
         }
 
         CarregarJTableCliente("Código", "");
@@ -226,58 +232,65 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         if (tblClientes.getRowCount() > 0) {
             int linha = tblClientes.getSelectedRow();
+            if (linha >= 0) {
+                int id = Integer.parseInt(tblClientes.getModel().getValueAt(linha, 0).toString());
+                String nome = tblClientes.getModel().getValueAt(linha, 1).toString();
+                String cpf = tblClientes.getModel().getValueAt(linha, 2).toString();
+                String nascimento = tblClientes.getModel().getValueAt(linha, 3).toString();
+                String sexo = tblClientes.getModel().getValueAt(linha, 4).toString();
+                String estadoCivil = tblClientes.getModel().getValueAt(linha, 5).toString();
+                String email = tblClientes.getModel().getValueAt(linha, 6).toString();
+                //Linha 7 é somente para Jtable
+                String tipoTelefone = tblClientes.getModel().getValueAt(linha, 8).toString();
+                String ddd = tblClientes.getModel().getValueAt(linha, 9).toString();
+                String telefone = tblClientes.getModel().getValueAt(linha, 10).toString();
+                String logradouro = tblClientes.getModel().getValueAt(linha, 11).toString();
+                String bairro = tblClientes.getModel().getValueAt(linha, 12).toString();
+                String complemento = tblClientes.getModel().getValueAt(linha, 13).toString();
+                String cep = tblClientes.getModel().getValueAt(linha, 14).toString();
+                String uf = tblClientes.getModel().getValueAt(linha, 15).toString();
+                String cidade = tblClientes.getModel().getValueAt(linha, 16).toString();
+                String numEndereco = tblClientes.getModel().getValueAt(linha, 17).toString();
 
-            int id = Integer.parseInt(tblClientes.getModel().getValueAt(linha, 0).toString());
-            String nome = tblClientes.getModel().getValueAt(linha, 1).toString();
-            String cpf = tblClientes.getModel().getValueAt(linha, 2).toString();
-            String nascimento = tblClientes.getModel().getValueAt(linha, 3).toString();
-            String sexo = tblClientes.getModel().getValueAt(linha, 4).toString();
-            String estadoCivil = tblClientes.getModel().getValueAt(linha, 5).toString();
-            String email = tblClientes.getModel().getValueAt(linha, 6).toString();
-            //Linha 7 é somente para Jtable
-            String tipoTelefone = tblClientes.getModel().getValueAt(linha, 8).toString();
-            String ddd = tblClientes.getModel().getValueAt(linha, 9).toString();
-            String telefone = tblClientes.getModel().getValueAt(linha, 10).toString();
-            String logradouro = tblClientes.getModel().getValueAt(linha, 11).toString();
-            String bairro = tblClientes.getModel().getValueAt(linha, 12).toString();
-            String complemento = tblClientes.getModel().getValueAt(linha, 13).toString();
-            String cep = tblClientes.getModel().getValueAt(linha, 14).toString();
-            String uf = tblClientes.getModel().getValueAt(linha, 15).toString();
-            String cidade = tblClientes.getModel().getValueAt(linha, 16).toString();
-            String numEndereco = tblClientes.getModel().getValueAt(linha, 17).toString();
+                //Id
+                objCliente.setId(id);
 
-            //Id
-            objCliente.setId(id);
+                //Dados Básicos
+                objCliente.setNome(nome);
+                objCliente.setCpf(cpf);
+                try {
+                    objCliente.setNascimento(new SimpleDateFormat("dd/MM/yyyy").parse(nascimento));
+                } catch (ParseException ex) {
+                    Logger.getLogger(BuscaClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                objCliente.setSexo(sexo);
+                objCliente.setEstadoCivil(estadoCivil);
 
-            //Dados Básicos
-            objCliente.setNome(nome);
-            objCliente.setCpf(cpf);
-            objCliente.setNascimento(nascimento);
-            objCliente.setSexo(sexo);
-            objCliente.setEstadoCivil(estadoCivil);
+                //Contato
+                objCliente.setEmail(email);
+                objCliente.setTipoTelefone(tipoTelefone);
+                objCliente.setDdd(ddd);
+                objCliente.setTelefone(telefone);
 
-            //Contato
-            objCliente.setEmail(email);
-            objCliente.setTipoTelefone(tipoTelefone);
-            objCliente.setDdd(ddd);
-            objCliente.setTelefone(telefone);
+                //Endereço
+                objCliente.setLogradouro(logradouro);
+                objCliente.setBairro(bairro);
+                objCliente.setComplemento(complemento);
+                objCliente.setCep(cep);
+                objCliente.setUf(uf);
+                objCliente.setCidade(cidade);
+                objCliente.setNumEndereco(numEndereco);
 
-            //Endereço
-            objCliente.setLogradouro(logradouro);
-            objCliente.setBairro(bairro);
-            objCliente.setComplemento(complemento);
-            objCliente.setCep(cep);
-            objCliente.setUf(uf);
-            objCliente.setCidade(cidade);
-            objCliente.setNumEndereco(numEndereco);
+                CadastroClienteFrame cadastroCliente = new CadastroClienteFrame(objCliente);
+                cadastroCliente.modoTela = "Alterar";
 
-            CadastroClienteFrame cadastroCliente = new CadastroClienteFrame(objCliente);
-            cadastroCliente.modoTela = "Alterar";
+                cadastroCliente.setVisible(true);
 
-            cadastroCliente.setVisible(true);
-
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um cliente da tabela!");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione um cliente da tabela!");
+            JOptionPane.showMessageDialog(this, "Não existem clientes cadastrados neste parametro!");
         }
 
         CarregarJTableCliente("Código", "");
@@ -307,18 +320,18 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
 
             case ("Telefone"): 
                 try {
-                    mask = new MaskFormatter("#####-####");
-                    mask.install(txtBusca);
-                } catch (ParseException ex) {
-                    Logger.getLogger(BuscaClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                mask = new MaskFormatter("#####-####");
+                mask.install(txtBusca);
+            } catch (ParseException ex) {
+                Logger.getLogger(BuscaClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
             break;
 
             case ("CEP"):
                 try {
-                    mask = new MaskFormatter("#####-###");
-                    mask.install(txtBusca);
-                } catch (ParseException ex) {
+                mask = new MaskFormatter("#####-###");
+                mask.install(txtBusca);
+            } catch (ParseException ex) {
                 Logger.getLogger(BuscaClienteFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
             break;
@@ -399,6 +412,7 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
  * @param busca = Valor dentro do parametro para Busca
  */
     private void CarregarJTableCliente(String parametro, String busca) {
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
         ArrayList<Cliente> listaClientes = ClienteDAO.consultarClientes(parametro, busca);
 
         DefaultTableModel tmClientes = new DefaultTableModel() {
@@ -437,7 +451,7 @@ public class BuscaClienteFrame extends javax.swing.JFrame {
         tmClientes.setRowCount(0);
 
         for (Cliente c : listaClientes) {
-            tmClientes.addRow(new Object[]{c.getId(), c.getNome(), c.getCpf(), c.getNascimento(), c.getSexo(), c.getEstadoCivil(),
+            tmClientes.addRow(new Object[]{c.getId(), c.getNome(), c.getCpf(), formatador.format(c.getNascimento()), c.getSexo(), c.getEstadoCivil(),
                 c.getEmail(), "(" + c.getDdd() + ") " + c.getTelefone(), c.getTipoTelefone(), c.getDdd(), c.getTelefone(),
                 c.getLogradouro(), c.getBairro(), c.getComplemento(), c.getCep(), c.getUf(), c.getCidade(), c.getNumEndereco()});
         }

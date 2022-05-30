@@ -7,6 +7,7 @@ package br.senac.tads.pi1.pigrupo5.view;
 
 import br.senac.tads.pi1.pigrupo5.dao.RelatorioDAO;
 import br.senac.tads.pi1.pigrupo5.model.Relatorio;
+import br.senac.tads.pi1.pigrupo5.utils.Validador;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,15 +19,17 @@ import javax.swing.table.DefaultTableModel;
  * @author bispo
  */
 public class BuscaRelatorioFrame extends javax.swing.JFrame {
+
     Relatorio objRelatorio;
-    
+
     /**
      * Creates new form ComprasPI
      */
     public BuscaRelatorioFrame() {
         initComponents();
+        setLocationRelativeTo(null);
         objRelatorio = new Relatorio();
-        
+
         CarregarJTableRelatorio("Cod. Pedido", "", null, null);
 
     }
@@ -78,7 +81,7 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Buscar por:");
 
-        cbParametro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cod. Pedido", "Cod. Cliente", "Nome" }));
+        cbParametro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cod. Pedido", "Cod. Cliente", "Nome", "CPF" }));
         cbParametro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbParametroActionPerformed(evt);
@@ -193,31 +196,42 @@ public class BuscaRelatorioFrame extends javax.swing.JFrame {
         if (tblRelatorios.getRowCount() > 0) {
             int linha = tblRelatorios.getSelectedRow();
 
-            int idPedido = Integer.parseInt(tblRelatorios.getModel().getValueAt(linha, 0).toString());
-            int idCliente = Integer.parseInt(tblRelatorios.getModel().getValueAt(linha, 1).toString());
-            String nome = tblRelatorios.getModel().getValueAt(linha, 2).toString();
-            String cpf = tblRelatorios.getModel().getValueAt(linha, 3).toString();
-            double valorTotal = Double.parseDouble(tblRelatorios.getModel().getValueAt(linha, 4).toString().trim().replace("R$ ", ""));
-            double valorDesconto = Double.parseDouble(tblRelatorios.getModel().getValueAt(linha, 5).toString().trim().replace("R$ ", ""));
-            String dataPedido  = tblRelatorios.getModel().getValueAt(linha, 6).toString();
-            
-            objRelatorio.setId(idPedido);
-            objRelatorio.setIdCliente(idCliente);
-            objRelatorio.setNomeCliente(nome);
-            objRelatorio.setCpf(cpf);
-            objRelatorio.setTotal(valorTotal);
-            objRelatorio.setDesconto(valorDesconto);
-            objRelatorio.setDataRelatorio(dataPedido);
-            
-            RelatorioFrame relatorioFrame = new RelatorioFrame(objRelatorio);
-            relatorioFrame.setVisible(true);
+            if (linha >= 0) {
+                int idPedido = Integer.parseInt(tblRelatorios.getModel().getValueAt(linha, 0).toString());
+                int idCliente = Integer.parseInt(tblRelatorios.getModel().getValueAt(linha, 1).toString());
+                String nome = tblRelatorios.getModel().getValueAt(linha, 2).toString();
+                String cpf = tblRelatorios.getModel().getValueAt(linha, 3).toString();
+                double valorTotal = Double.parseDouble(tblRelatorios.getModel().getValueAt(linha, 4).toString().trim().replace("R$ ", ""));
+                double valorDesconto = Double.parseDouble(tblRelatorios.getModel().getValueAt(linha, 5).toString().trim().replace("R$ ", ""));
+                String dataPedido = tblRelatorios.getModel().getValueAt(linha, 6).toString();
+
+                objRelatorio.setId(idPedido);
+                objRelatorio.setIdCliente(idCliente);
+                objRelatorio.setNomeCliente(nome);
+                objRelatorio.setCpf(cpf);
+                objRelatorio.setTotal(valorTotal);
+                objRelatorio.setDesconto(valorDesconto);
+                objRelatorio.setDataRelatorio(dataPedido);
+
+                RelatorioFrame relatorioFrame = new RelatorioFrame(objRelatorio);
+                relatorioFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecione um relatório da tabela!");
+            }
+
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione um relatório da tabela!");
+            JOptionPane.showMessageDialog(this, "Não há pedidos para este parametro");
         }
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        CarregarJTableRelatorio(cbParametro.getSelectedItem().toString(), txfBusca.getText(), dcInicio.getDate(), dcFim.getDate());
+        Validador validador = new Validador();
+        
+        if (validador.CompararData(this.dcInicio, this.dcFim)){
+            CarregarJTableRelatorio(cbParametro.getSelectedItem().toString(), txfBusca.getText(), dcInicio.getDate(), dcFim.getDate());
+        } else {
+            JOptionPane.showMessageDialog(this, "Data Inicial é maior que a final!");
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void txfBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfBuscaKeyTyped
