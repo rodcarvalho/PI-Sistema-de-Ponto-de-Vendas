@@ -9,6 +9,7 @@ package br.senac.tads.pi1.pigrupo5.model;
  *
  * @author rodrigocarvalho
  */
+
 public class Cliente {
     private int id;
     private String nome, cpf, nascimento, sexo, estadoCivil;

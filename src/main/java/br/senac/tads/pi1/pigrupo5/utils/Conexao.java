@@ -34,7 +34,10 @@ public class Conexao {
 
     public Conexao() {
     }
-
+/**
+ * gerando Status banco, e sua tabela
+ * @return 
+ */
     public static String getStatus() {
         return status;
     }
@@ -74,7 +77,10 @@ public class Conexao {
         return conexao;
     }
     
-    
+    /**
+     * Fechhando Conexao com o Banco de Dados
+     * @return 
+     */
     public static boolean fecharConexao(){
         boolean retorno;
         

@@ -18,7 +18,12 @@ import java.util.ArrayList;
  * @author Kaio
  */
 public class ClienteDAO {
-
+/**
+ * Conectando com o Banco de Dados e adicionando os Dados que ficaram Guardados nele
+ * 
+ * @param c
+ * @return 
+ */
     public static boolean adicionar(Cliente c) {
         boolean retorno;
         Connection conexao = null;
@@ -80,7 +85,12 @@ public class ClienteDAO {
 
         return retorno;
     }
-
+/**
+ * Conectando com o Banco e Atualizando os Dados no mesmo, como as informações do Cliente
+ * 
+ * @param c
+ * @return 
+ */
     public static boolean atualizar(Cliente c) {
         boolean retorno;
         Connection conexao = null;
@@ -145,7 +155,12 @@ public class ClienteDAO {
 
         return retorno;
     }
-
+/**
+ * Utilizando o ID unico do Cliente para excluir o CADASTRO do cliente no banco de dados no qual tinha sido salvo
+ * 
+ * @param Id
+ * @return 
+ */
     public static boolean excluir(int Id) {
         boolean retorno = false;
         Connection conexao = null;
@@ -192,7 +207,13 @@ public class ClienteDAO {
 
         return retorno;
     }
-
+/**
+ * Procura no banco de dados utilizando os parametros antes fornecidos e  mostra na tela o resultado
+ * 
+  * @param txtParametro
+ * @param txtBusca
+ * @return 
+ */
     public static ArrayList<Cliente> consultarClientes(String txtParametro, String txtBusca) {
         ResultSet rs = null;
         Connection conexao = null;
