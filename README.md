@@ -1,7 +1,7 @@
 # Projeto Integrador II - Sistema de Ponto de Vendas
 Centro Universitário SENAC
 Tecnologia em Análise e Desenvolvimento de Sistemas
-Nortuno Turma B 
+Noturno Turma B 
 
 #### Grupo 5: 
 Enrico Bispo
